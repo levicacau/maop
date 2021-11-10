@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-11-03T15:28:35</date>
+  <millis>1635971315328</millis>
+  <sequence>0</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Total execution time: 556ms</message>
+</record>
+</log>
