@@ -1,0 +1,102 @@
+if(args.length != 3){
+	System.out.println( "usage: MOEAD_main <problem, obj Number, Variant>" );
+	System.exit(1);
+}
+
+problem=null;
+
+int objectiveNumber=Integer.parseInt(args[1]);
+
+//l=20 (distance related), k=4 (position related) if M=2, otherwise k=2*(M-1) //from the WFG readme file
+int WFGK=0;
+if(objectiveNumber==2)
+	WFGK=4;
+else
+	WFGK=2*(objectiveNumber-1);
+
+try{
+
+	if(args[0].equals("dtlz1")){
+		problem=new DTLZ1("Real", objectiveNumber+5-1,objectiveNumber);//k=5
+	}
+	if(args[0].equals("dtlz2")){
+		problem=new DTLZ2("Real", objectiveNumber+10-1,objectiveNumber);//k=10
+	}
+	if(args[0].equals("dtlz3")){
+		problem=new DTLZ3("Real", objectiveNumber+10-1,objectiveNumber);//k=10
+	}
+	if(args[0].equals("dtlz4")){
+		problem=new DTLZ4("Real", objectiveNumber+10-1,objectiveNumber);//k=10
+	}
+	if(args[0].equals("dtlz5")){
+		problem=new DTLZ5("Real", objectiveNumber+10-1,objectiveNumber);//k=10
+	}
+	if(args[0].equals("dtlz6")){
+		problem=new DTLZ6("Real", objectiveNumber+10-1,objectiveNumber);//k=10
+	}
+	if(args[0].equals("dtlz7")){
+		problem=new DTLZ7("Real", objectiveNumber+20-1,objectiveNumber);//k=20
+	}
+	if(args[0].equals("wfg1")){
+		problem=new WFG1("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg2")){
+		problem=new WFG2("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg3")){
+		problem=new WFG3("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg4")){
+		problem=new WFG4("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg5")){
+		problem=new WFG5("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg6")){
+		problem=new WFG6("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg7")){
+		problem=new WFG7("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg8")){
+		problem=new WFG8("Real", WFGK, 20, objectiveNumber);
+	}
+	if(args[0].equals("wfg9")){
+		problem=new WFG9("Real", WFGK, 20, objectiveNumber);
+	}
+}catch(Exception e){}
+
+if(problem == null){
+	System.out.println( "ERROR: Problem not detected!" );
+	System.exit(1);
+}
+int popsize=0;
+int iterationNumber=0;
+if(objectiveNumber==2){
+	popsize=100;
+	iterationNumber=500;
+}
+if(objectiveNumber==3){
+	popsize=91;
+	iterationNumber=1000;
+}
+if(objectiveNumber==5){
+	popsize=210;
+	iterationNumber=1000;
+}
+if(objectiveNumber==8){
+	popsize=156;
+	iterationNumber=1500;
+}
+if(objectiveNumber==10){
+	popsize=275;
+	iterationNumber=2000;
+}
+if(objectiveNumber==15){
+	popsize=135;
+	iterationNumber=3000;
+}
+// iterationNumber=iterationNumber*2;
+
+//int funcEvals=200000;
+int funcEvals = popsize*(iterationNumber+1);
