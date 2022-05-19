@@ -2,25 +2,355 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2022-05-19T11:26:52</date>
-  <millis>1652977612605</millis>
-  <sequence>0</sequence>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>4</sequence>
   <logger>jMetal</logger>
   <level>INFO</level>
   <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
   <method>run</method>
   <thread>14</thread>
-  <message>Problem dtlz2 obj 2 variante FDEA run 1</message>
+  <message>Problem DTLZ1 obj 2 variante FDEA run 1</message>
 </record>
 <record>
-  <date>2022-05-19T11:26:52</date>
-  <millis>1652977612825</millis>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>9</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>32</thread>
+  <message>Problem WFG3 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>8</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>30</thread>
+  <message>Problem WFG2 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>6</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>26</thread>
+  <message>Problem DTLZ7 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>7</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>28</thread>
+  <message>Problem WFG1 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>5</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>24</thread>
+  <message>Problem DTLZ6 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
   <sequence>1</sequence>
   <logger>jMetal</logger>
   <level>INFO</level>
   <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
   <method>run</method>
+  <thread>18</thread>
+  <message>Problem DTLZ3 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>2</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>22</thread>
+  <message>Problem DTLZ5 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>3</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>16</thread>
+  <message>Problem DTLZ2 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575136</millis>
+  <sequence>0</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Problem DTLZ4 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575572</millis>
+  <sequence>10</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>22</thread>
+  <message>Total execution time: 349</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575572</millis>
+  <sequence>11</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>24</thread>
+  <message>Total execution time: 349</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575572</millis>
+  <sequence>12</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>22</thread>
+  <message>Problem WFG4 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575582</millis>
+  <sequence>13</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>24</thread>
+  <message>Problem WFG5 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575612</millis>
+  <sequence>14</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>16</thread>
+  <message>Total execution time: 379</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575612</millis>
+  <sequence>15</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>16</thread>
+  <message>Problem WFG6 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575632</millis>
+  <sequence>16</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
   <thread>14</thread>
-  <message>Total execution time: 140</message>
+  <message>Total execution time: 409</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575632</millis>
+  <sequence>17</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>14</thread>
+  <message>Problem WFG7 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575632</millis>
+  <sequence>18</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Total execution time: 409</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575642</millis>
+  <sequence>19</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Problem WFG8 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575642</millis>
+  <sequence>20</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>Total execution time: 419</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575642</millis>
+  <sequence>21</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>Problem WFG9 obj 2 variante FDEA run 1</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575652</millis>
+  <sequence>22</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>28</thread>
+  <message>Total execution time: 429</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575652</millis>
+  <sequence>23</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>26</thread>
+  <message>Total execution time: 429</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575652</millis>
+  <sequence>24</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>32</thread>
+  <message>Total execution time: 429</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575682</millis>
+  <sequence>25</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>30</thread>
+  <message>Total execution time: 459</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575764</millis>
+  <sequence>26</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>22</thread>
+  <message>Total execution time: 182</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575784</millis>
+  <sequence>27</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>14</thread>
+  <message>Total execution time: 152</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575784</millis>
+  <sequence>28</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>24</thread>
+  <message>Total execution time: 192</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575784</millis>
+  <sequence>29</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>16</thread>
+  <message>Total execution time: 162</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575814</millis>
+  <sequence>30</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>20</thread>
+  <message>Total execution time: 172</message>
+</record>
+<record>
+  <date>2022-05-19T11:59:35</date>
+  <millis>1652979575834</millis>
+  <sequence>31</sequence>
+  <logger>jMetal</logger>
+  <level>INFO</level>
+  <class>jmetal.metaheuristics.fdea.FDEA_main_qualificacao$RunExperiment</class>
+  <method>run</method>
+  <thread>18</thread>
+  <message>Total execution time: 192</message>
 </record>
 </log>

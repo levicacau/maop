@@ -121,24 +121,24 @@ public class FDEA extends Algorithm{
 		int maxGenerations = maxEvaluations_/populationSize_ -1;
 		hvArray = new double[maxGenerations][2];
 
-		if(problem_.getName().equals("DTLZ1")){
-			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
-			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
-				referencePoint_.setObjective(i, 1);
-			}
-		}if(
-				problem_.getName().equals("DTLZ2") ||
-						problem_.getName().equals("DTLZ3") ||
-						problem_.getName().equals("DTLZ4") ||
-						problem_.getName().equals("DTLZ5") ||
-						problem_.getName().equals("DTLZ6")
-		){
-			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
-			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
-				referencePoint_.setObjective(i, 2);
-			}
-		}
-		FastHypervolume fhv = new FastHypervolume();
+//		if(problem_.getName().equals("DTLZ1")){
+//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
+//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
+//				referencePoint_.setObjective(i, 1);
+//			}
+//		}if(
+//				problem_.getName().equals("DTLZ2") ||
+//						problem_.getName().equals("DTLZ3") ||
+//						problem_.getName().equals("DTLZ4") ||
+//						problem_.getName().equals("DTLZ5") ||
+//						problem_.getName().equals("DTLZ6")
+//		){
+//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
+//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
+//				referencePoint_.setObjective(i, 2);
+//			}
+//		}
+//		FastHypervolume fhv = new FastHypervolume();
 
 		int interv;
 		if(problem_.getNumberOfObjectives() == 2){
@@ -217,24 +217,24 @@ public class FDEA extends Algorithm{
 				    //Elites Selection to preserve convergence
 				    getNextPopulation(subPopulation, evaluations_, maxEvaluations_, interv);
 				}
-			SolutionSet popHiper = nondominatedReferencePoint(population_);
-			try {
-				if(popHiper.size() >= problem_.getNumberOfObjectives()){
-
-					hvArray[generations_][0] = evaluations_;
-					double hv = fhv.computeHypervolume(popHiper, referencePoint_);
-					hvArray[generations_][1] = hv;
-				}
-			}catch (Exception e){
-				System.out.println("Erro  "+generations_);
-			}
+//			SolutionSet popHiper = nondominatedReferencePoint(population_);
+//			try {
+//				if(popHiper.size() >= problem_.getNumberOfObjectives()){
+//
+//					hvArray[generations_][0] = evaluations_;
+//					double hv = fhv.computeHypervolume(popHiper, referencePoint_);
+//					hvArray[generations_][1] = hv;
+//				}
+//			}catch (Exception e){
+//				System.out.println("Erro  "+generations_);
+//			}
 //			hvArray[generations_] = fhv.computeHypervolume(population_, referencePoint_);
 			generations_++;
 		}//while
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Pvalue.txt",pValue);
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
 
-		printHvToFile("results/FDEA/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
+//		printHvToFile("results/FDEA/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
 
 		Ranking nodominatedRanking = new NondominatedRanking(population_);
 		return nodominatedRanking.getSubfront(0);

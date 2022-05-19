@@ -6,6 +6,7 @@ import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.DTLZ.*;
+import jmetal.problems.WFG.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -29,6 +30,7 @@ public class FDEA_main_qualificacao {
 	public static Logger logger_; // Logger object
 	public static FileHandler fileHandler_; // FileHandler object
 	public static final String pathProblems = "C:\\projetos\\mestrado\\Fuzzy-Decomposition-based-Evolutionary-Algorithm-main\\FDEA\\src\\resources\\referenceFronts\\";
+	public static final String importProblems = "jmetal.problems.";
 
 
 	public static void printGD(String path,double[] GD){
@@ -76,7 +78,7 @@ public class FDEA_main_qualificacao {
 //		String[] objectives = "2 3 5 8 10".split(" ");
 //		String[] variantes = "FDEA FDEATESTE FastTea".split(" ");
 
-		String[] problems = "dtlz2".split(" "); // wfg 1-9
+		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
 		String[] objectives = "2".split(" ");
 		String[] variantes = "FDEA".split(" ");
 
@@ -102,8 +104,15 @@ public class FDEA_main_qualificacao {
   }//main
 
 	private static int getVar(String problem, int obj) {
-		int p = Integer.parseInt(problem.substring(4,5));
-		return p != 7 ? 9 + obj : 19 + obj;
+
+		if(problem.startsWith("DTL")){
+			int p = Integer.parseInt(problem.substring(4,5));
+			return p != 7 ? 9 + obj : 19 + obj;
+		}
+		if(problem.startsWith("WFG")){
+			return 20;
+		}
+		return 0;
 	}
 
 
@@ -195,54 +204,33 @@ public class FDEA_main_qualificacao {
 			HashMap parameters; // Operator parameters
 
 			Solution referencePoint;
-			String front = "";
+			String front = problema+"."+obj+"D.pf";
 			QualityIndicator indicators;// Object to get quality indicators
 			indicators = null;
 			int [] popiter = getPopIterSize(obj);
 
-			if(problema.equals("dtlz1")){
-				problem = new DTLZ1("Real",var,obj);
-				front = "DTLZ1."+obj+"D.pf";
-			}
-
-			if(problema.equals("dtlz2")){
+			String base = importProblems;
+			if(problema.startsWith("DTL")){
+				base = base+"DTLZ.";
 				try{
-					Class<?> c = Class.forName("jmetal.problems.DTLZ."+problema.toUpperCase());
+					Class<?> c = Class.forName(base+problema);
 					Constructor<?> cons = c.getConstructor(String.class, Integer.class, Integer.class);
 					problem = (Problem) cons.newInstance(new Object[] { "Real", var, obj });
 				}catch (Exception e){
 					System.out.println("Erro ao instanciar a classe");
 				}
-
-
-				// problem = new DTLZ2("Real",var,obj);
-				front = "DTLZ2."+obj+"D.pf";
+			}
+			if(problema.startsWith("WFG")){
+				base = base+"WFG.";
+				try{
+					Class<?> c = Class.forName(base+problema);
+					Constructor<?> cons = c.getConstructor(String.class, Integer.class, Integer.class, Integer.class);
+					problem = (Problem) cons.newInstance(new Object[] { "Real", 4, var, obj });
+				}catch (Exception e){
+					System.out.println("Erro ao instanciar a classe");
+				}
 			}
 
-			if(problema.equals("dtlz3")){
-				problem = new DTLZ3("Real",var,obj);
-				front = "DTLZ3."+obj+"D.pf";
-			}
-
-			if(problema.equals("dtlz4")){
-				problem = new DTLZ4("Real",var,obj);
-				front = "DTLZ4."+obj+"D.pf";
-			}
-
-			if(problema.equals("dtlz5")){
-				problem = new DTLZ5("Real",var,obj);
-				front = "DTLZ5."+obj+"D.pf";
-			}
-
-			if(problema.equals("dtlz6")){
-				problem = new DTLZ6("Real",var,obj);
-				front = "DTLZ6."+obj+"D.pf";
-			}
-
-			if(problema.equals("dtlz7")){
-				problem = new DTLZ7("Real",var,obj);
-				front = "DTLZ7."+obj+"D.pf";
-			}
 
 			if(variante.equals("FDEATESTE")){
 				algorithm = new FDEATESTE(problem);
