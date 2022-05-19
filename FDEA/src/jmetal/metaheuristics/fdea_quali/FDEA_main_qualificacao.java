@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.FileHandler;
@@ -25,7 +26,14 @@ public class FDEA_main_qualificacao {
 	public static FileHandler fileHandler_; // FileHandler object
 	public static final String pathProblems = "C:\\projetos\\mestrado\\Fuzzy-Decomposition-based-Evolutionary-Algorithm-main\\FDEA\\src\\resources\\referenceFronts\\";
 	public static final String importProblems = "jmetal.problems.";
-
+	public static final Map<Integer, Integer> wfgK = new HashMap<Integer, Integer>() {{
+		put(2, 2);
+		put(3, 4);
+		put(5, 8);
+		put(8, 14);
+		put(10, 18);
+		put(15, 28);
+	}};
 
 	public static void printGD(String path,double[] GD){
 	    try {
@@ -219,7 +227,7 @@ public class FDEA_main_qualificacao {
 				try{
 					Class<?> c = Class.forName(base+problema);
 					Constructor<?> cons = c.getConstructor(String.class, Integer.class, Integer.class, Integer.class);
-					problem = (Problem) cons.newInstance(new Object[] { "Real", 4, var, obj });
+					problem = (Problem) cons.newInstance(new Object[] { "Real", wfgK.get(obj), var, obj });
 				}catch (Exception e){
 					System.out.println("Erro ao instanciar a classe");
 				}
