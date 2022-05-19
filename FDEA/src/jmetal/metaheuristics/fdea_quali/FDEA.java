@@ -35,7 +35,6 @@ public class FDEA extends Algorithm{
 	private double[] zideal_; //ideal point
 	private double[] znadir_;//Nadir point
 	double[][] extremePoints_; // extreme points
-	private double[][] hvArray;
 
 	int T_;
 	int[][] neighborhood_;
@@ -112,7 +111,6 @@ public class FDEA extends Algorithm{
 		neighborhood_ = new int[populationSize_][T_];
 
 		int maxGenerations = maxEvaluations_/populationSize_ -1;
-		hvArray = new double[maxGenerations][2];
 
 //		if(problem_.getName().equals("DTLZ1")){
 //			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
@@ -407,27 +405,27 @@ public class FDEA extends Algorithm{
 		} // for
 	}
 	
-	public void reproduction_Neighbor() throws JMException{
+	public void reproduction_Neighbor() throws JMException {
 		evaluations_ += populationSize_;
 		getNeighborhood_Population();
-		
+
 		offspringPopulation_ = new SolutionSet(populationSize_);
 		Solution[] parents = new Solution[2];
 		for (int i = 0; i < (populationSize_); i++) {
 			// obtain parents
-			int r1 = PseudoRandom.randInt(0, populationSize_-1);
+			int r1 = PseudoRandom.randInt(0, populationSize_ - 1);
 			parents[0] = population_.get(r1);
 			double rd = PseudoRandom.randDouble();
-			if(rd < 0.2){
-				int r2 = PseudoRandom.randInt(0, populationSize_-1);
-				while(r1 == r2){
-					r2 = PseudoRandom.randInt(0, populationSize_-1);
+			if (rd < 0.2) {
+				int r2 = PseudoRandom.randInt(0, populationSize_ - 1);
+				while (r1 == r2) {
+					r2 = PseudoRandom.randInt(0, populationSize_ - 1);
 				}
 				parents[1] = population_.get(r2);
-			}else{
-				int r2 = PseudoRandom.randInt(0, T_-1);
-				while(r1 == neighborhood_[r1][r2]){
-					r2 = PseudoRandom.randInt(0, T_-1);
+			} else {
+				int r2 = PseudoRandom.randInt(0, T_ - 1);
+				while (r1 == neighborhood_[r1][r2]) {
+					r2 = PseudoRandom.randInt(0, T_ - 1);
 				}
 				parents[1] = population_.get(neighborhood_[r1][r2]);
 			}
@@ -440,22 +438,6 @@ public class FDEA extends Algorithm{
 			problem_.evaluateConstraints(offSpring[0]);
 			offspringPopulation_.add(offSpring[0]);
 		} // for
-	}
-
-	public void printHvToFile(String path) {
-		try {
-			FileOutputStream fos = new FileOutputStream(path);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			BufferedWriter bw = new BufferedWriter(osw);
-			for (double[] hv : hvArray){
-				bw.write(hv[0]+", "+hv[1]);
-				bw.newLine();
-			}
-			bw.close();
-		} catch (IOException e) {
-			Configuration.logger_.severe("Error acceding to the file");
-			e.printStackTrace();
-		}
 	}
 
 	public void getNeighborhood_Population(){
