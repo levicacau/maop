@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -22,7 +23,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-public class FDEA_main_experiment {
+import java.lang.reflect.Constructor;
+
+public class FDEA_main_qualificacao {
 	public static Logger logger_; // Logger object
 	public static FileHandler fileHandler_; // FileHandler object
 	public static final String pathProblems = "C:\\projetos\\mestrado\\Fuzzy-Decomposition-based-Evolutionary-Algorithm-main\\FDEA\\src\\resources\\referenceFronts\\";
@@ -73,10 +76,11 @@ public class FDEA_main_experiment {
 //		String[] objectives = "2 3 5 8 10".split(" ");
 //		String[] variantes = "FDEA FDEATESTE FastTea".split(" ");
 
-		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6".split(" "); // wfg 1-9
-		String[] objectives = "2 3 5".split(" ");
-		String[] variantes = "FDEA FDEATESTE".split(" ");
+		String[] problems = "dtlz2".split(" "); // wfg 1-9
+		String[] objectives = "2".split(" ");
+		String[] variantes = "FDEA".split(" ");
 
+		int runs = 1;
 
 		int obj = 2;
 		int variaveis = 24;
@@ -88,7 +92,7 @@ public class FDEA_main_experiment {
 			for (String objective : objectives) {
 				obj = Integer.parseInt(objective);
 				for (String variante : variantes) {
-					for (int run = 1; run <= 30; run++) {
+					for (int run = 1; run <= 1; run++) {
 						executor.execute(new RunExperiment(problema, obj, variante, getVar(problema, obj), run));
 					}
 				}
@@ -102,35 +106,66 @@ public class FDEA_main_experiment {
 		return p != 7 ? 9 + obj : 19 + obj;
 	}
 
+
 	public static int[] getPopIterSize(int objectiveNumber){
 		int popsize=0;
 		int iterationNumber=0;
 		if(objectiveNumber==2){
 			popsize=100;
-			iterationNumber=300*popsize;
+			iterationNumber=500;
 		}
 		if(objectiveNumber==3){
-			popsize=120;
-			iterationNumber=500*popsize;
+			popsize=190;
+			iterationNumber=4750;
 		}
 		if(objectiveNumber==5){
-			popsize=210; //*25
-			iterationNumber=600*popsize;
+			popsize=714; //*25
+			iterationNumber=9996;
 		}
 		if(objectiveNumber==8){
-			popsize=240; //*20
-			iterationNumber=800*popsize;
+			popsize=912; //*20
+			iterationNumber=18240;
 		}
 		if(objectiveNumber==10){
-			popsize=275; //*30
-			iterationNumber=1000*popsize;
+			popsize=934; //*30
+			iterationNumber=28020;
 		}
 		if(objectiveNumber==15){
-			popsize=240;
-			iterationNumber=1500*popsize;
+			popsize=140;
+			iterationNumber=3000;
 		}
-		return new int[]{popsize, iterationNumber};
+		return new int[]{popsize, iterationNumber*3};
 	}
+
+	// public static int[] getPopIterSize(int objectiveNumber){
+	// 	int popsize=0;
+	// 	int iterationNumber=0;
+	// 	if(objectiveNumber==2){
+	// 		popsize=100;
+	// 		iterationNumber=300*popsize;
+	// 	}
+	// 	if(objectiveNumber==3){
+	// 		popsize=120;
+	// 		iterationNumber=500*popsize;
+	// 	}
+	// 	if(objectiveNumber==5){
+	// 		popsize=210; //*25
+	// 		iterationNumber=600*popsize;
+	// 	}
+	// 	if(objectiveNumber==8){
+	// 		popsize=240; //*20
+	// 		iterationNumber=800*popsize;
+	// 	}
+	// 	if(objectiveNumber==10){
+	// 		popsize=275; //*30
+	// 		iterationNumber=1000*popsize;
+	// 	}
+	// 	if(objectiveNumber==15){
+	// 		popsize=240;
+	// 		iterationNumber=1500*popsize;
+	// 	}
+	// 	return new int[]{popsize, iterationNumber};
+	// }
 
 	public static class RunExperiment extends Thread {
 		String problema, variante;
@@ -171,7 +206,16 @@ public class FDEA_main_experiment {
 			}
 
 			if(problema.equals("dtlz2")){
-				problem = new DTLZ2("Real",var,obj);
+				try{
+					Class<?> c = Class.forName("jmetal.problems.DTLZ."+problema.toUpperCase());
+					Constructor<?> cons = c.getConstructor(String.class, Integer.class, Integer.class);
+					problem = (Problem) cons.newInstance(new Object[] { "Real", var, obj });
+				}catch (Exception e){
+					System.out.println("Erro ao instanciar a classe");
+				}
+
+
+				// problem = new DTLZ2("Real",var,obj);
 				front = "DTLZ2."+obj+"D.pf";
 			}
 

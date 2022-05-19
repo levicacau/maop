@@ -42,7 +42,7 @@ public class FDEA extends Algorithm{
 	private double[] zideal_; //ideal point
 	private double[] znadir_;//Nadir point
 	double[][] extremePoints_; // extreme points
-	private double[] hvArray;
+	private double[][] hvArray;
 
 	int T_;
 	int[][] neighborhood_;
@@ -119,7 +119,7 @@ public class FDEA extends Algorithm{
 		neighborhood_ = new int[populationSize_][T_];
 
 		int maxGenerations = maxEvaluations_/populationSize_ -1;
-		hvArray = new double[maxGenerations];
+		hvArray = new double[maxGenerations][2];
 
 		if(problem_.getName().equals("DTLZ1")){
 			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
@@ -221,7 +221,9 @@ public class FDEA extends Algorithm{
 			try {
 				if(popHiper.size() >= problem_.getNumberOfObjectives()){
 
-					hvArray[generations_] = fhv.computeHypervolume(popHiper, referencePoint_);
+					hvArray[generations_][0] = evaluations_;
+					double hv = fhv.computeHypervolume(popHiper, referencePoint_);
+					hvArray[generations_][1] = hv;
 				}
 			}catch (Exception e){
 				System.out.println("Erro  "+generations_);
@@ -452,8 +454,8 @@ public class FDEA extends Algorithm{
 			FileOutputStream fos = new FileOutputStream(path);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			BufferedWriter bw = new BufferedWriter(osw);
-			for (double hv : hvArray){
-				bw.write(""+hv);
+			for (double[] hv : hvArray){
+				bw.write(hv[0]+", "+hv[1]);
 				bw.newLine();
 			}
 			bw.close();

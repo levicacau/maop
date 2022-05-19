@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,6 +40,7 @@ public class FDEATESTE extends Algorithm{
 	SolutionSet union_;
 	Solution referencePoint_;
 	int dynamicExpand_ = 0;
+	boolean expandNow_ = false;
 	boolean expanded_ = false;
 
 	int generations_;
@@ -203,7 +203,7 @@ public class FDEATESTE extends Algorithm{
 		while (evaluations_ < maxEvaluations_) {
 //			System.out.println("Population size: "+population_.size());
 
-			if(evaluations_ == targetEvaluations_){
+			if(!expanded_ && (evaluations_ == targetEvaluations_ || expandNow_)){
 				expand_population();
 			}
 
@@ -257,7 +257,12 @@ public class FDEATESTE extends Algorithm{
 				try {
 					if(popHiper.size() >= problem_.getNumberOfObjectives()){
 						hvArray[generations_][0] = evaluations_;
-						hvArray[generations_][1] = fhv.computeHypervolume(popHiper, referencePoint_);
+						double hv = fhv.computeHypervolume(popHiper, referencePoint_);
+						hvArray[generations_][1] = hv;
+						if(!compareHV(hv)) expandNow_ = true;
+					}else{
+						hvArray[generations_][0] = evaluations_;
+						hvArray[generations_][1] = 0;
 					}
 				}catch (Exception e){
 					System.out.println("Erro  "+generations_);
@@ -280,9 +285,8 @@ public class FDEATESTE extends Algorithm{
 	public boolean compareHV(double currentHV){
 		/* return true if HV is better than others, false if less*/
 		if(currentHV == 0) return true;
-		int t = hvArray.length;
-		if(t < dynamicExpand_) return true;
-		for(int i=t-1; i>t-dynamicExpand_; i--){
+		if(generations_ < dynamicExpand_) return true;
+		for(int i=generations_-1; i>generations_-dynamicExpand_; i--){
 			if(currentHV > hvArray[i][1]) return true;
 		}
 		return false;
@@ -373,155 +377,9 @@ public class FDEATESTE extends Algorithm{
 			// If nobody dominates p, p belongs to the first front
 		}
 		return retorno;
-//		for (int p = 0; p < solutionSet_.size(); p++) {
-//			if (dominateMe[p] == 0) {
-//				front[0].add(p);
-//				solutionSet.get(p).setRank(0);
-//			}
-//		}
-//
-//		// Obtain the rest of fronts
-//		int i = 0;
-//		Iterator<Integer> it1, it2; // Iterators
-//		while (front[i].size() != 0) {
-//			i++;
-//			it1 = front[i - 1].iterator();
-//			while (it1.hasNext()) {
-//				it2 = iDominate[it1.next()].iterator();
-//				while (it2.hasNext()) {
-//					int index = it2.next();
-//					dominateMe[index]--;
-//					if (dominateMe[index] == 0) {
-//						front[i].add(index);
-//						solutionSet_.get(index).setRank(i);
-//					}
-//				}
-//			}
-//		}
-//		// <-
-//
-//		ranking_ = new SolutionSet[i];
-//		// 0,1,2,....,i-1 are front, then i fronts
-//		for (int j = 0; j < i; j++) {
-//			ranking_[j] = new SolutionSet(front[j].size());
-//			it1 = front[j].iterator();
-//			while (it1.hasNext()) {
-//				ranking_[j].add(solutionSet.get(it1.next()));
-//			}
-//		}
 
 	}
 
-	public SolutionSet execute2() throws JMException, ClassNotFoundException {
-		int maxGenerations_, targetGeneration, maxEvaluations, targetEvaluation;
-
-		generations_ = 0;
-
-		maxGenerations_ = ((Integer) this.getInputParameter("maxGenerations")).intValue();
-		targetGeneration = maxGenerations_/2;
-
-		populationSizeGeneral_ = ((Integer) this.getInputParameter("populationSize")).intValue();
-		populationSize_ = populationSizeGeneral_/5;
-		mutation_ = operators_.get("mutation");
-		crossover_ = operators_.get("crossover");
-		selection_ = operators_.get("selection");
-
-		T_ = ((Integer) this.getInputParameter("T")).intValue();
-		neighborhood_ = new int[populationSize_][T_];
-
-		int interv;
-		if(problem_.getNumberOfObjectives() == 2){
-			interv = 12;
-		}else if(problem_.getNumberOfObjectives() == 3){
-			interv = 20;
-		}else if(problem_.getNumberOfObjectives() == 5){
-			interv = 24;
-		}else if(problem_.getNumberOfObjectives() == 8){
-			interv = 32;
-		}else if(problem_.getNumberOfObjectives() == 10){
-			interv = 40;
-		}else if(problem_.getNumberOfObjectives() == 15){
-			interv = 60;
-		}else{
-			interv = 30;
-		}
-		pValue = new double[maxGenerations_/interv];
-		w = new double[maxGenerations_/interv][problem_.getNumberOfObjectives()];
-
-		initPopulation();// initialize the population;
-
-		initIdealPoint();  // initialize the ideal point
-
-		initNadirPoint();    // initialize the nadir point
-
-		initExtremePoints(); // initialize the extreme points
-		int nn = 0;
-		while (generations_ < maxGenerations_) {
-//			System.out.println("Population size: "+population_.size());
-
-			if(generations_ == targetGeneration){
-
-				generateOffspring(populationSizeGeneral_ - populationSize_);
-				population_ = ((SolutionSet) population_).union(offspringPopulation_);
-				populationSize_ = populationSizeGeneral_;
-			}
-
-			if(generations_ < maxGenerations_){
-				reproduction(generations_, maxGenerations_);
-			}else{
-				reproduction_Neighbor();
-			}
-			union_ = ((SolutionSet) population_).union(offspringPopulation_);
-			population_.clear();
-			SolutionSet[] st = getStSolutionSet(union_,populationSize_);
-			double p = 1.0;
-			SolutionSet[] subPopulation = null;
-			//Autodecomposition
-				//estimateIdealPoint(st[0]);
-			    updateIdealPoint(st[0]);
-			    if(st[0].size() < problem_.getNumberOfObjectives()){
-			    	updateNadirPoint(st[1]);
-			    }else{
-			    	updateNadirPoint(st[0]);
-			    }
-
-				//estimateNadirPoint(st[1]);
-
-				normalizationObjective(st[1]);
-
-				/*if((generations_)/100 == 0){
-					p = estimation_Curvature(st[0]);
-				}*/
-				if(generations_ > 0.0*maxGenerations_){
-					p = estimation_Curvature(st[0]);
-				}
-
-
-				/*if(generations_%interv == 0){
-				  pValue[nn] = p;
-				  System.out.println("The current curvature is p = "+p);
-				  nn++;
-			    }*/
-				if(st[1].size() == populationSize_){
-					population_ = st[1];
-				}else{
-					mapping(st[1],p);
-				    subPopulation = new MostSimilarBasedSampling(st[1], problem_.getNumberOfObjectives())
-							.getIdealPointOrientedPopulation(populationSize_);
-				    //Elites Selection to preserve convergence
-				    getNextPopulation(subPopulation,generations_,maxGenerations_, interv);
-				}
-
-			generations_++;
-		}//while
-		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Pvalue.txt",pValue);
-		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
-
-
-		Ranking nodominatedRanking = new NondominatedRanking(population_);
-		return nodominatedRanking.getSubfront(0);
-		//return population_;
-	}//execute
 
 	public void initPopulation() throws JMException, ClassNotFoundException {
 		evaluations_ += populationSize_;

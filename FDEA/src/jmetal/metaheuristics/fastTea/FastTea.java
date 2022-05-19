@@ -66,12 +66,12 @@ public class FastTea extends Algorithm{
 	public static void printGD(String path,double[] GD){
 	    try {
 	      /* Open the file */
-	      FileOutputStream fos   = new FileOutputStream(path)     ;//javaÎÄ¼þÊä³öÁ÷£¬´´½¨ÎÄ¼þÁ÷
-	      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;//OutputStreamWriterÊÇ×Ö·ûÁ÷Í¨Ïò×Ö½ÚÁ÷µÄÇÅÁº 
-	      BufferedWriter bw      = new BufferedWriter(osw)        ;//»º³åÇø               
+	      FileOutputStream fos   = new FileOutputStream(path)     ;//javaï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+	      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;//OutputStreamWriterï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	      BufferedWriter bw      = new BufferedWriter(osw)        ;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½               
 	      for (int i = 0; i < GD.length; i++) {  
-	        bw.write(GD[i]+" ");//Ð´µ½»º³åÇø
-	        bw.newLine(); //»»ÐÐ       
+	        bw.write(GD[i]+" ");//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	        bw.newLine(); //ï¿½ï¿½ï¿½ï¿½       
 	      }
 	      
 	      /* Close the file */
@@ -85,14 +85,14 @@ public class FastTea extends Algorithm{
 	public static void printGD(String path,double[][] GD){
 	    try {
 	      /* Open the file */
-	      FileOutputStream fos   = new FileOutputStream(path)     ;//javaÎÄ¼þÊä³öÁ÷£¬´´½¨ÎÄ¼þÁ÷
-	      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;//OutputStreamWriterÊÇ×Ö·ûÁ÷Í¨Ïò×Ö½ÚÁ÷µÄÇÅÁº 
-	      BufferedWriter bw      = new BufferedWriter(osw)        ;//»º³åÇø               
+	      FileOutputStream fos   = new FileOutputStream(path)     ;//javaï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+	      OutputStreamWriter osw = new OutputStreamWriter(fos)    ;//OutputStreamWriterï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	      BufferedWriter bw      = new BufferedWriter(osw)        ;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½               
 	      for (int i = 0; i < GD.length; i++) {
 	    	  for(int j=0;j<GD[i].length;j++){
-	    		  bw.write(GD[i][j]+" ");//Ð´µ½»º³åÇø
+	    		  bw.write(GD[i][j]+" ");//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	  }
-	          bw.newLine(); //»»ÐÐ       
+	          bw.newLine(); //ï¿½ï¿½ï¿½ï¿½       
 	      }
 	      
 	      /* Close the file */
@@ -152,28 +152,28 @@ public class FastTea extends Algorithm{
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
 
 		firstPhase();
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 //		Generate offspring population Q with N ? N1 individuals from P
 //		by using genetic operators and evaluate their objective vectors
 
 		generateOffspring(populationSizeGeneral_ - populationSize_);
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 		SolutionSet basepop = new SolutionSet();
 		basepop = ((SolutionSet) basepop).union(population_);
 
 		population_ = ((SolutionSet) population_).union(offspringPopulation_);
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 
 		/* Second Phase */
 		while(evaluations_ <= maxEvaluations_){
 			generateNewPopulationI(basepop);
 			generations_ ++;
-//			System.out.println("Gerações: "+generations_ + " População: "+population_.size());
+//			System.out.println("Geraï¿½ï¿½es: "+generations_ + " Populaï¿½ï¿½o: "+population_.size());
 //			String fileName = "FastTea_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_run"+ 1  + ".txt";
 //			population_.printObjectivesToFile(fileName);
 		}
 
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 
 //		Ranking nodominatedRanking = new NondominatedRanking(population_);
 //		return nodominatedRanking.getSubfront(0);
@@ -239,31 +239,31 @@ public class FastTea extends Algorithm{
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
 
 		firstPhase();
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 //		System.out.println("Evaluations "+evaluations_);
 //		System.out.println("Generations "+generations_);
 //		Generate offspring population Q with N ? N1 individuals from P
 //		by using genetic operators and evaluate their objective vectors
 
 		generateOffspring(populationSizeGeneral_ - populationSize_);
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 		SolutionSet basepop = new SolutionSet();
 		basepop = ((SolutionSet) basepop).union(population_);
 
 		population_ = ((SolutionSet) population_).union(offspringPopulation_);
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 
 		/* Second Phase */
 		populationSize_ = populationSizeGeneral_;
 		while(generations_ <= maxGenerations_){
 			generateNewPopulationI(basepop);
 			generations_ ++;
-//			System.out.println("Gerações: "+generations_ + " População: "+population_.size());
+//			System.out.println("Geraï¿½ï¿½es: "+generations_ + " Populaï¿½ï¿½o: "+population_.size());
 //			String fileName = "FastTea_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_run"+ 1  + ".txt";
 //			population_.printObjectivesToFile(fileName);
 		}
 
-//		System.out.println("tamanho da população "+population_.size());
+//		System.out.println("tamanho da populaï¿½ï¿½o "+population_.size());
 //		System.out.println("Evaluations "+evaluations_);
 //		System.out.println("Generations "+generations_);
 
@@ -299,7 +299,7 @@ public class FastTea extends Algorithm{
 		double p = estimation_Curvature(population_);
 		mapping(union_, p);
 
-		/* Separa soluções dominadas */
+		/* Separa soluï¿½ï¿½es dominadas */
 //		SolutionSet[] st = getStSolutionSet(union_,populationSize_);
 //		double p = 1.0;
 //		SolutionSet[] subPopulation = null;
