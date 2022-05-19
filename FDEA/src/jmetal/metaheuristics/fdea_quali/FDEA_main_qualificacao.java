@@ -80,11 +80,11 @@ public class FDEA_main_qualificacao {
 //		String[] objectives = "2 3 5 8 10".split(" ");
 //		String[] variantes = "FDEA FDEATESTE FastTea".split(" ");
 
-		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
+		String[] problems = "wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
 		String[] objectives = "2 3 5 8".split(" ");
 		String[] variantes = "FDEATESTE FDEA".split(" ");
 
-		int runs = 1;
+		int runs = 30;
 
 		int obj = 2;
 		int variaveis = 24;
@@ -96,7 +96,7 @@ public class FDEA_main_qualificacao {
 			for (String objective : objectives) {
 				obj = Integer.parseInt(objective);
 				for (String variante : variantes) {
-					for (int run = 1; run <= 1; run++) {
+					for (int run = 1; run <= runs; run++) {
 						executor.execute(new RunExperiment(problema, obj, variante, getVar(problema, obj), run));
 					}
 				}

@@ -80,7 +80,7 @@ public class FDEA_main_qualificacao {
 
 		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
 		String[] objectives = "2".split(" ");
-		String[] variantes = "FDEA".split(" ");
+		String[] variantes = "FDEATESTE".split(" ");
 
 		int runs = 1;
 
