@@ -1,0 +1,15 @@
+set title "Teste"
+unset key
+set tic scale 0
+
+# Color runs from white to green
+set palette rgbformula -7,-7,-7
+set cbrange [0:1.1]
+set cblabel "Objective values"
+unset cbtics
+
+set xrange [-0.5:8.5]
+set yrange [-0.5:1000.5]
+
+set view map
+splot "novo(0,0)DTLZ2-9_fronts.txt" matrix with image

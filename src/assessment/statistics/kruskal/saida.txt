@@ -1,0 +1,54 @@
+..... ..... ..... ..... ..... ..... ..... (crit. Diff: 0.05)
+
+\begin{table*}[t]
+ \center 
+ %\tiny 
+ \caption{$IGD_p$ results} 
+ \begin{tabular}{c|c|c|c|c|c|c|c|c}
+\hline
+Obj.&Algorithms&DTLZ1&DTLZ2&DTLZ3&DTLZ4&DTLZ5&DTLZ6&DTLZ7\\ \hline
+2&FDEA&45.77 (2.00)&\cellcolor{gray!30}\textbf{19.70 (1.00)}&62.67 (3.00)&\cellcolor{gray!30}\textbf{30.83 (1.00)}&\cellcolor{gray!30}\textbf{20.13 (1.00)}&\cellcolor{gray!30}\textbf{24.00 (1.00)}&\cellcolor{gray!30}\textbf{21.13 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{24.70 (1.00)}&41.30 (2.00)&\cellcolor{gray!30}\textbf{23.13 (1.00)}&42.37 (2.00)&40.87 (2.00)&45.17 (2.00)&39.87 (2.00)\\
+&FastTea&66.03 (3.00)&75.50 (3.00)&50.70 (2.00)&63.30 (3.00)&75.50 (3.00)&67.33 (3.00)&75.50 (3.00)\\ \hline
+3&FDEA&\cellcolor{gray!30}\textbf{22.50 (1.00)}&\cellcolor{gray!30}\textbf{25.30 (1.00)}&\cellcolor{gray!30}\textbf{25.23 (1.00)}&36.90 (2.00)&\cellcolor{gray!30}\textbf{22.00 (1.00)}&\cellcolor{gray!30}\textbf{20.47 (1.00)}&\cellcolor{gray!30}\textbf{25.23 (1.00)}\\
+&FDEATESTE&38.50 (2.00)&35.70 (2.00)&39.00 (2.00)&\cellcolor{gray!30}\textbf{27.10 (1.00)}&39.00 (2.00)&40.57 (2.00)&45.37 (2.00)\\
+&FastTea&75.50 (3.00)&75.50 (3.00)&72.27 (3.00)&72.50 (3.00)&75.50 (3.00)&75.47 (3.00)&65.90 (3.00)\\ \hline
+5&FDEA&34.87 (2.00)&43.80 (2.00)&31.20 (2.00)&38.53 (2.00)&35.93 (2.00)&\cellcolor{gray!30}\textbf{29.00 (1.00)}&31.87 (2.00)\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{26.13 (1.00)}&\cellcolor{gray!30}\textbf{17.20 (1.00)}&\cellcolor{gray!30}\textbf{31.00 (1.00)}&\cellcolor{gray!30}\textbf{22.47 (1.00)}&\cellcolor{gray!30}\textbf{27.63 (1.00)}&34.67 (2.00)&\cellcolor{gray!30}\textbf{29.13 (1.00)}\\
+&FastTea&75.50 (3.00)&75.50 (3.00)&74.30 (3.00)&75.50 (3.00)&72.93 (3.00)&72.83 (3.00)&75.50 (3.00)\\ \hline
+8&FDEA&33.13 (2.00)&39.37 (2.00)&\cellcolor{gray!30}\textbf{32.63 (1.00)}&33.00 (2.00)&\cellcolor{gray!30}\textbf{43.43 (1.00)}&\cellcolor{gray!30}\textbf{26.17 (1.00)}&\cellcolor{gray!30}\textbf{20.03 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{27.87 (1.00)}&\cellcolor{gray!30}\textbf{22.93 (1.00)}&35.27 (2.00)&\cellcolor{gray!30}\textbf{28.03 (1.00)}&48.37 (3.00)&44.33 (2.00)&40.97 (2.00)\\
+&FastTea&75.50 (3.00)&74.20 (3.00)&68.60 (3.00)&75.47 (3.00)&44.70 (2.00)&66.00 (3.00)&75.50 (3.00)\\ \hline
+10&FDEA&\cellcolor{gray!30}\textbf{17.10 (1.00)}&\cellcolor{gray!30}\textbf{15.50 (1.00)}&\cellcolor{gray!30}\textbf{27.23 (1.00)}&\cellcolor{gray!30}\textbf{15.50 (1.00)}&39.83 (2.00)&52.27 (2.00)&\cellcolor{gray!30}\textbf{17.60 (1.00)}\\
+&FDEATESTE&44.80 (2.00)&68.10 (3.00)&53.23 (2.00)&74.87 (3.00)&59.73 (3.00)&\cellcolor{gray!30}\textbf{26.57 (1.00)}&71.10 (3.00)\\
+&FastTea&74.60 (3.00)&52.90 (2.00)&56.03 (3.00)&46.13 (2.00)&\cellcolor{gray!30}\textbf{36.93 (1.00)}&57.67 (3.00)&47.80 (2.00)\\ \hline
+\end{tabular}
+\label{results}
+\end{table*}
+..... ..... ..... ..... ..... ..... ..... (crit. Diff: 0.05)
+
+\begin{table*}[t]
+ \center 
+ %\tiny 
+ \caption{Hypervolume results} 
+ \begin{tabular}{c|c|c|c|c|c|c|c|c}
+\hline
+Obj.&Algorithms&DTLZ1&DTLZ2&DTLZ3&DTLZ4&DTLZ5&DTLZ6&DTLZ7\\ \hline
+2&FDEA&39.37 (2.00)&\cellcolor{gray!30}\textbf{18.30 (1.00)}&43.47 (2.00)&\cellcolor{gray!30}\textbf{25.63 (1.00)}&\cellcolor{gray!30}\textbf{18.83 (1.00)}&\cellcolor{gray!30}\textbf{23.17 (1.00)}&\cellcolor{gray!30}\textbf{22.47 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{21.63 (1.00)}&42.70 (2.00)&\cellcolor{gray!30}\textbf{17.53 (1.00)}&43.17 (2.00)&42.17 (2.00)&37.83 (2.00)&38.53 (2.00)\\
+&FastTea&75.50 (3.00)&75.50 (3.00)&75.50 (3.00)&67.70 (3.00)&75.50 (3.00)&75.50 (3.00)&75.50 (3.00)\\ \hline
+3&FDEA&32.67 (2.00)&\cellcolor{gray!30}\textbf{19.70 (1.00)}&\cellcolor{gray!30}\textbf{33.13 (1.00)}&\cellcolor{gray!30}\textbf{27.30 (1.00)}&\cellcolor{gray!30}\textbf{20.30 (1.00)}&\cellcolor{gray!30}\textbf{22.57 (1.00)}&\cellcolor{gray!30}\textbf{20.07 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{28.33 (1.00)}&41.30 (2.00)&33.70 (2.00)&36.63 (2.00)&40.70 (2.00)&38.63 (2.00)&41.63 (2.00)\\
+&FastTea&75.50 (3.00)&75.50 (3.00)&69.67 (3.00)&72.57 (3.00)&75.50 (3.00)&75.30 (3.00)&74.80 (3.00)\\ \hline
+5&FDEA&42.98 (2.00)&\cellcolor{gray!30}\textbf{30.10 (1.00)}&34.60 (2.00)&32.07 (2.00)&35.63 (2.00)&\cellcolor{gray!30}\textbf{29.80 (1.00)}&\cellcolor{gray!30}\textbf{28.20 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{18.02 (1.00)}&30.97 (2.00)&\cellcolor{gray!30}\textbf{33.07 (1.00)}&\cellcolor{gray!30}\textbf{30.27 (1.00)}&\cellcolor{gray!30}\textbf{31.27 (1.00)}&32.43 (2.00)&32.80 (2.00)\\
+&FastTea&75.50 (3.00)&75.43 (3.00)&68.83 (3.00)&74.17 (3.00)&69.60 (3.00)&74.27 (3.00)&75.50 (3.00)\\ \hline
+8&FDEA&43.72 (2.00)&39.53 (2.00)&43.30 (2.00)&36.97 (2.00)&\cellcolor{gray!30}\textbf{34.07 (1.00)}&\cellcolor{gray!30}\textbf{27.73 (1.00)}&\cellcolor{gray!30}\textbf{17.93 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{17.28 (1.00)}&\cellcolor{gray!30}\textbf{21.50 (1.00)}&\cellcolor{gray!30}\textbf{26.47 (1.00)}&\cellcolor{gray!30}\textbf{24.03 (1.00)}&45.03 (2.00)&33.40 (2.00)&43.07 (2.00)\\
+&FastTea&75.50 (3.00)&75.47 (3.00)&66.73 (3.00)&75.50 (3.00)&57.40 (3.00)&75.37 (3.00)&75.50 (3.00)\\ \hline
+10&FDEA&40.70 (2.00)&\cellcolor{gray!30}\textbf{15.50 (1.00)}&\cellcolor{gray!30}\textbf{31.90 (1.00)}&\cellcolor{gray!30}\textbf{15.50 (1.00)}&\cellcolor{gray!30}\textbf{40.33 (1.00)}&\cellcolor{gray!30}\textbf{27.17 (1.00)}&\cellcolor{gray!30}\textbf{24.93 (1.00)}\\
+&FDEATESTE&\cellcolor{gray!30}\textbf{20.30 (1.00)}&55.57 (2.00)&45.72 (2.00)&72.17 (3.00)&50.27 (3.00)&36.30 (2.00)&38.03 (2.00)\\
+&FastTea&75.50 (3.00)&65.43 (3.00)&58.88 (3.00)&48.83 (2.00)&45.90 (2.00)&73.03 (3.00)&73.53 (3.00)\\ \hline
+\end{tabular}
+\label{results}
+\end{table*}
