@@ -1,9 +1,13 @@
-#problems="dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9"
-problems="dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7"
+problems="dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9"
+#problems="dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7"
 #problems="wfg6 wfg7 wfg8 wfg9"
-objectives="2 3 5 8 10"
+objectives="2 3 5 8 10 15"
 
-entradas=$(cat results/titles.txt | tail -1)
+basePath=../../../results
+
+entradas=$(cat "$basePath/titles.txt" | tail -1)
+
+
 
 for problem in $problems; do #first step, verify if all the files exist
 	for objective in $objectives; do
@@ -12,7 +16,7 @@ for problem in $problems; do #first step, verify if all the files exist
 			for ((run=1;run<31;run++)); do
 				alg=`echo $nomeSaida | cut -d '/' -f 1`
 				nameBase=`echo $nomeSaida | cut -d '/' -f 1`
-				file=results/$alg/split/$problem-$objective-$nameBase
+				file=$basePath/$alg/split/$problem-$objective-$nameBase
 				paramFile="parameters/$problem-$objective-$nameBase.txt"
 
 				if [ ! -f "$file""_fronts.$run.txt" ]; then
@@ -62,19 +66,19 @@ for problem in $problems; do #if all is ok, concatenate the files
 
 			alg=`echo $nomeSaida | cut -d '/' -f 1`
 			nameBase=`echo $nomeSaida | cut -d '/' -f 1`
-			rm -f results/$alg/$nameBase$problem-$objective""_fronts.txt
-			rm -f results/$alg/$nameBase$problem-$objective""_solutions.txt
+			rm -f $basePath/$alg/$nameBase$problem-$objective""_fronts.txt
+			rm -f $basePath/$alg/$nameBase$problem-$objective""_solutions.txt
 
 			for ((run=1;run<31;run++)); do
 
-				file=results/$alg/split/$problem-$objective-$nameBase
-				cat $file""_fronts.$run.txt >> results/$alg/$problem-$objective""_fronts.txt
-				cat $file""_solutions.$run.txt >> results/$alg/$problem-$objective""_solutions.txt
+				file=$basePath/$alg/split/$problem-$objective-$nameBase
+				cat $file""_fronts.$run.txt >> $basePath/$alg/$problem-$objective""_fronts.txt
+				cat $file""_solutions.$run.txt >> $basePath/$alg/$problem-$objective""_solutions.txt
 
-				echo "" >> results/$alg/$problem-$objective""_fronts.txt
-				echo "" >> results/$alg/$problem-$objective""_fronts.txt
-				echo "" >> results/$alg/$problem-$objective""_solutions.txt
-				echo "" >> results/$alg/$problem-$objective""_solutions.txt
+				echo "" >> $basePath/$alg/$problem-$objective""_fronts.txt
+				echo "" >> $basePath/$alg/$problem-$objective""_fronts.txt
+				echo "" >> $basePath/$alg/$problem-$objective""_solutions.txt
+				echo "" >> $basePath/$alg/$problem-$objective""_solutions.txt
 			done
 # 			echo results/$alg/$nameBase$problem-$objective
 		done
