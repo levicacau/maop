@@ -16,12 +16,13 @@ import java.io.File;
 public class tabArtigo{
 public static void println(String x){System.out.println(x);}
 public static void println(){System.out.println();}
-static String caminho="../../../results/";
+static String caminho="results/";
 static String table[][];
 static double medias[][];
 static boolean iguais[][];
 static double melhores[];
 	public static void main(String[] args) throws IOException{
+		System.out.println("Iniciando..");
 		//String objectives[]={"2","3","5","10","15","20"};
 		String objectives[]={"2","3","5","8","10", "15"};
 		//String metrics[] = {"$GD_p$", "$IGD_p$", "$R_2$","Hypervolume"};
@@ -196,8 +197,9 @@ static double melhores[];
 		try {
 			//String comando="java -cp ../statistics/friedman fdr_full temp.txt";
 			String comando="java -cp ../statistics/kruskal ksk_full temp.txt";
- 			Process p =  Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", comando});
- 			p.waitFor();
+// 			Process p =  Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", comando});
+			Process p = Runtime.getRuntime().exec("java -cp ../statistics/kruskal ksk_full temp.txt");
+			p.waitFor();
  			System.out.print(".");
  			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line;
@@ -233,6 +235,6 @@ static double melhores[];
 		return saida;
 	}
 	public static String format(double valor){
-		return String.format("%.2e", valor).replace(",",".").replace("e","E");
+		return String.format("%.5e", valor).replace(",",".").replace("e","E");
 	}
 }

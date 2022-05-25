@@ -184,7 +184,7 @@ for m in range(0, len(mats)):
 	##plt.xticks(fontsize=42, rotation=-90)
 	plt.xticks(rotation=-45)
 	
-	directory='../../results/img'
+	directory='../../../results/img'
 
 	if not os.path.exists(directory):
 		os.makedirs(directory)

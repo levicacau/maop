@@ -1,3 +1,5 @@
+package assessment.metrics;
+
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-class Front{
+class FrontR2{
 	public ArrayList<double[]> solutions = new ArrayList<double[]>();
 }
 public class r2 {
@@ -22,13 +24,13 @@ public class r2 {
 			System.exit(1);
 		}
 // 		String problem=determineProblem(args);
-		ArrayList<Front[]> file = new ArrayList<Front[]>();
+		ArrayList<FrontR2[]> file = new ArrayList<FrontR2[]>();
 		
 		for(int f=0;f<args.length;f++){
 			FileReader fr = new FileReader(args[f]);
 			BufferedReader br = new BufferedReader(fr);
 			ArrayList<double[]> dados = new ArrayList<double[]>();
-			Front[] front = new Front[numExec];
+			FrontR2[] front = new FrontR2[numExec];
 			int cont = 0;
 
 			String linha = br.readLine();
@@ -46,7 +48,7 @@ public class r2 {
 				} else { //se chegar na linha em branco ou invalida
 					if(dados.size() > 0){
 //						System.out.println(calcular(lerReal(args[1]), dados));
-						front[cont]=new Front();
+						front[cont]=new FrontR2();
 						front[cont].solutions=new ArrayList<double[]>(dados);
 						cont++;
 					}
@@ -57,7 +59,7 @@ public class r2 {
 			}
 			if(dados.size() > 0){//quando terminou o arquivo, processa os dados da ultima fronteira
 				//System.out.println(calcular(lerReal(args[1]), dados));
-				front[cont]=new Front();
+				front[cont]=new FrontR2();
 				front[cont].solutions=new ArrayList<double[]>(dados);
 				cont++;
 			}
@@ -74,7 +76,7 @@ public class r2 {
 		}
 		//atualiza os maiores e menores valores
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontR2[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				for(int s=0;s<frontTemp[f].solutions.size();s++){//solucoes dentro do front
 					double[] solTemp=frontTemp[f].solutions.get(s);
@@ -103,7 +105,7 @@ public class r2 {
 		double[][] resultados = new double[file.size()][numExec];
 // 		ArrayList<double[]> frontRealN = normalizeTudo(frontReal);
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontR2[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				resultados[fe][f]=calcular(frontReal, normalizeTudo(frontTemp[f].solutions));
 			}

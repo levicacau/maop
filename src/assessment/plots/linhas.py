@@ -111,4 +111,4 @@ plt.ylabel('$'+metric+'$')
 
 
 #plt.show() #show the plot
-plt.savefig('../../results/img/plot-'+problem+'-'+metric+'.eps') #save the plot as file
+plt.savefig('../../../results/img/plot-'+problem+'-'+metric+'.eps') #save the plot as file

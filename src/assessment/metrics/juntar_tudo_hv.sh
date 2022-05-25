@@ -5,13 +5,13 @@ basePath=../../../results
 entradas=$(cat $basePath/titles.txt | tail -1)
 
 comando=""
-EFS="
+EFSddd="
 "
 #for problem in dtlz1 dtlz4 dtlz7 wfg1 wfg4 wfg6; do
 for problem in $1; do
 #problem=$1
 	rm -f "$basePath/all-$problem-hv.txt"
-	for objectives in 2 3 5 8 10; do
+	for objectives in 2 3 5 8 10 15; do
 # 	for objectives in 15; do
 	#for objectives in 2 3 5 8 9; do
 		for nomeSaida in $entradas; do

@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.File;
 import java.util.Random;
 
-class Front{
+class FrontHv{
 	public ArrayList<double[]> solutions = new ArrayList<double[]>();
 }
 public class hv {
@@ -28,14 +28,14 @@ public class hv {
 		}
 		String problem=determineProblem(args);
 		String tempname=(problem+"-");
-		ArrayList<Front[]> file = new ArrayList<Front[]>();
+		ArrayList<FrontHv[]> file = new ArrayList<FrontHv[]>();
 		
 		for(int f=0;f<args.length;f++){
 			//tempname+=args[f].split("/")[args[f].split("/").length-1];
 			FileReader fr = new FileReader(args[f]);
 			BufferedReader br = new BufferedReader(fr);
 			ArrayList<double[]> dados = new ArrayList<double[]>();
-			Front[] front = new Front[numExec];
+			FrontHv[] front = new FrontHv[numExec];
 			int cont = 0;
 
 			String linha = br.readLine();
@@ -53,7 +53,7 @@ public class hv {
 				} else { //se chegar na linha em branco ou invalida
 					if(dados.size() > 0){
 						//System.out.println(calcular(dados, lerReal(args[1])));
-						front[cont]=new Front();
+						front[cont]=new FrontHv();
 						front[cont].solutions=new ArrayList<double[]>(dados);
 						cont++;
 					}
@@ -64,7 +64,7 @@ public class hv {
 			}
 			if(dados.size() > 0){//quando terminou o arquivo, processa os dados da ultima fronteira
 				//System.out.println(calcular(dados, lerReal(args[1])));
-				front[cont]=new Front();
+				front[cont]=new FrontHv();
 				front[cont].solutions=new ArrayList<double[]>(dados);
 				cont++;
 			}
@@ -80,7 +80,7 @@ public class hv {
 		}
 		//atualiza os maiores e menores valores
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontHv[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				for(int s=0;s<frontTemp[f].solutions.size();s++){//solucoes dentro do front
 					double[] solTemp=frontTemp[f].solutions.get(s);
@@ -112,7 +112,7 @@ public class hv {
 		//System.exit(1);
 		//double hvReal=calcular(frontReal);
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontHv[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				tempname=(tempname.split("-")[0])+"-"+(fe+"*"+f+"*"+objectiveNumber+"*"+System.nanoTime());
 				resultados[fe][f]=calcular(frontTemp[f].solutions, tempname );
@@ -225,7 +225,7 @@ public class hv {
 // 			gdp = Math.sqrt( (1.0/PFtrue.size()) * soma ); //gdp
 // 			
 // 		} else{
-// 			System.err.println("Erro no calculo do GD: Fronteira de Pareto nao carregada.");
+// 			System.err.println("Erro no calculo do GD: FrontHveira de Pareto nao carregada.");
 // 			System.exit(0);
 // 			return 0;
 // 		}	

@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-class Front{
+class FrontIGDP{
 	public ArrayList<double[]> solutions = new ArrayList<double[]>();
 }
 public class igdp {
@@ -22,13 +22,13 @@ public class igdp {
 			System.exit(1);
 		}
 		String problem=determineProblem(args);
-		ArrayList<Front[]> file = new ArrayList<Front[]>();
+		ArrayList<FrontIGDP[]> file = new ArrayList<FrontIGDP[]>();
 		
 		for(int f=0;f<args.length;f++){
 			FileReader fr = new FileReader(args[f]);
 			BufferedReader br = new BufferedReader(fr);
 			ArrayList<double[]> dados = new ArrayList<double[]>();
-			Front[] front = new Front[numExec];
+			FrontIGDP[] front = new FrontIGDP[numExec];
 			int cont = 0;
 
 			String linha = br.readLine();
@@ -46,7 +46,7 @@ public class igdp {
 				} else { //se chegar na linha em branco ou invalida
 					if(dados.size() > 0){
 //						System.out.println(calcular(lerReal(args[1]), dados));
-						front[cont]=new Front();
+						front[cont]=new FrontIGDP();
 						front[cont].solutions=new ArrayList<double[]>(dados);
 						cont++;
 					}
@@ -57,7 +57,7 @@ public class igdp {
 			}
 			if(dados.size() > 0){//quando terminou o arquivo, processa os dados da ultima fronteira
 				//System.out.println(calcular(lerReal(args[1]), dados));
-				front[cont]=new Front();
+				front[cont]=new FrontIGDP();
 				front[cont].solutions=new ArrayList<double[]>(dados);
 				cont++;
 			}
@@ -74,7 +74,7 @@ public class igdp {
 		}
 		//atualiza os maiores e menores valores
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontIGDP[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				for(int s=0;s<frontTemp[f].solutions.size();s++){//solucoes dentro do front
 					double[] solTemp=frontTemp[f].solutions.get(s);
@@ -103,7 +103,7 @@ public class igdp {
 		double[][] resultados = new double[file.size()][numExec];
 		ArrayList<double[]> frontRealN = normalizeTudo(frontReal);
 		for(int fe=0;fe<file.size();fe++){
-			Front[] frontTemp = file.get(fe);
+			FrontIGDP[] frontTemp = file.get(fe);
 			for(int f=0;f<frontTemp.length;f++){ //fronts dentro do arquivo
 				resultados[fe][f]=calcular(frontRealN, normalizeTudo(frontTemp[f].solutions));
 			}
@@ -145,7 +145,7 @@ public class igdp {
 			gdp = Math.sqrt( (1.0/PFtrue.size()) * soma ); //gdp
 			
 		} else{
-			System.err.println("Erro no calculo do IGD: Fronteira de Pareto nao carregada.");
+			System.err.println("Erro no calculo do IGD: FrontIGDPeira de Pareto nao carregada.");
 			System.exit(0);
 			return 0;
 		}	
