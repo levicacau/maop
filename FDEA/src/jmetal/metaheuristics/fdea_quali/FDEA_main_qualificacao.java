@@ -9,10 +9,7 @@ import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,8 +77,8 @@ public class FDEA_main_qualificacao {
 //		String[] objectives = "2 3 5 8 10".split(" ");
 //		String[] variantes = "FDEA FDEATESTE FastTea".split(" ");
 
-		String[] problems = "wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
-		String[] objectives = "2 3 5 8".split(" ");
+		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
+		String[] objectives = "2 3 5 8 10 15".split(" ");
 		String[] variantes = "FDEATESTE FDEA".split(" ");
 
 		int runs = 30;
@@ -196,6 +193,8 @@ public class FDEA_main_qualificacao {
 
 			long Execution_time=0;
 
+			checkPathResults("results/"+variante +"/split/");
+
 			Problem problem = null; // The problem to solve
 			Algorithm algorithm = null; // The algorithm to use
 			Operator crossover = null; // Crossover operator\
@@ -307,9 +306,19 @@ public class FDEA_main_qualificacao {
 			Execution_time+=(System.currentTimeMillis() - initTime);
 
 			logger_.info("Total execution time: "+Execution_time);
+
 			population.printVariablesToFile("results/"+variante +"/split/"+problema+"-"+obj + "-" + variante + "_solutions." + run + ".txt");
 			population.printObjectivesToFile("results/"+variante +"/split/" + problema + "-" + obj + "-" + variante + "_fronts." + run + ".txt");
 
+		}
+
+		private void checkPathResults(String PATH) {
+			File directory = new File(PATH);
+			if (! directory.exists()){
+				directory.mkdirs();
+				// If you require it to make the entire directory path including parents,
+				// use directory.mkdirs(); here instead.
+			}
 		}
 	}
 }

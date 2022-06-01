@@ -961,11 +961,7 @@ public void crowdingDistanceAssignment7(SolutionSet solutionSet, int nObjs) {//S
     //int sb1 =  PseudoRandom.randInt(-4, 5);
     //int sb2 =  PseudoRandom.randInt(-4, 5);
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance;
     	    front.get(k).setCrowdingDistance( objectiveValue[k] +  front.get(k).getCrowdingDistance()); 
@@ -1122,11 +1118,7 @@ public void crowdingDistanceAssignment4(SolutionSet solutionSet, int nObjs) {//S
       //avgobjectiveValue =((sumobjectiveValue) /(front.size())) ;
    
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance;
     	    front.get(k).setCrowdingDistance( objectiveValue[k] +  front.get(k).getCrowdingDistance()); 
@@ -1316,11 +1308,7 @@ public void crowdingDistanceAssignment45(SolutionSet solutionSet, int nObjs) {//
 
    // System.out.println((avgobjectiveValue)/maxdistance +" "+aveCrowdingDistance+" "+aveD1+" "+aveD2);
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance;
     	    front.get(k).setCrowdingDistance( objectiveValue[k] +  front.get(k).getCrowdingDistance()); 
@@ -1510,11 +1498,7 @@ public void crowdingDistanceAssignment46(SolutionSet solutionSet, int nObjs) {//
 
    // System.out.println((avgobjectiveValue)/maxdistance +" "+aveCrowdingDistance+" "+aveD1+" "+aveD2);
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance;
     	    front.get(k).setCrowdingDistance( objectiveValue[k] +  front.get(k).getCrowdingDistance()); 
@@ -1718,11 +1702,7 @@ public void crowdingDistanceAssignment54(SolutionSet solutionSet, int nObjs) {//
 
    // System.out.println((avgobjectiveValue)/maxdistance +" "+aveCrowdingDistance+" "+aveD1+" "+aveD2);
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance;
     		if(d1[k]<aveD1){
@@ -1926,11 +1906,7 @@ public void crowdingDistanceAssignment55(SolutionSet solutionSet, int nObjs) {//
 
    // System.out.println((avgobjectiveValue)/maxdistance +" "+aveCrowdingDistance+" "+aveD1+" "+aveD2);
     for(int k = 0; k < front.size(); k++){    
-    	/**
-    	 * ÕâÀïÖ÷ÒªÕë¶ÔÊÕÁ²ÐÔµÄÁ½ÖÖÇé¿öµÄ¿¼ÂÇ£¬ÊÕÁ²ÐÔºÃÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ£¬ÒÔ¼°ÊÕÁ²ÐÔ½Ï²îÊ±µÄ¶àÑùÐÔµÄ¿¼ÂÇ
-    	 * µ±ÊÕÁ²ÐÔºÃ£¬Ôò¶àÑùÐÔÖµ´ó¡¢´óÓÚÆ½¾ùµÄ¶àÑùÐÔÖµ£¬±íÊ¾¶àÑùÐÔ½ÏºÃ£¬·ñÔò±íÊ¾¶àÑùÐÔ²»ºÃ
-    	 * µ±ÊÕÁ²²»ºÃµÄÇé¿öÏÂ£¬¶àÑùÐÔµÄÖµ½Ï´óÊ±£¬Ôò±íÊ¾ÊÇÊôÓÚ¶ÀÁ¢½ÏÔ¶µÄµã£¬µ±¶àÑùÐÔÐ¡ÓÚÆ½¾ùÖµ£¬Ôò±íÊ¾µ¥´¿µÄÊÇ¡¢¶àÑùÐÔ²»¹»ºÃ
-    	 * */
+
     	if( objectiveValue[k] <= avgobjectiveValue && front.get(k).getCrowdingDistance() >  aveCrowdingDistance){ 
     		objectiveValue[k] = 1 -  1.0 * objectiveValue[k] / maxdistance ;
     		if(d1[k]>aveD1){
