@@ -1,0 +1,24 @@
+javac -d "classes" -encoding ISO-8859-1 -cp "FDEA/src;FDEA/lib/*" "FDEA/src/jmetal/metaheuristics/fdea_quali/FDEA_main_qualificacao.java"
+
+java -cp "classes;FDEA\src;FDEA\lib\*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao.java
+
+
+
+javac -d "classes" -cp "FDEA/src:FDEA/lib/*" FDEA/src/jmetal/metaheuristics/fdea_quali/FDEA_main_qualificacao.java
+javac -d "classes" -cp "FDEA/src" FDEA/src/jmetal/problems/DTLZ/*.java
+javac -d "classes" -cp "FDEA/src" FDEA/src/jmetal/problems/WFG/*.java
+java -cp "classes:FDEA/lib/*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+
+ 123  java -cp "classes:FDEA\src:FDEA\lib\*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  124  javac -d "classes" FDEA/src/jmetal/problems/DTLZ/*.java
+  125  javac -d "classes" -cp "FDEA/src" FDEA/src/jmetal/problems/DTLZ/*.java
+  126  javac -d "classes" -cp "FDEA/src" FDEA/src/jmetal/problems/WFG/*.java
+  127  java -cp "classes:FDEA\lib\*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  128  java -cp "classes:FDEA\src:FDEA\lib\*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  129  java -cp "classes:FDEA\src:FDEA\lib\Jama.jar" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  130  java -cp "classes:FDEA\lib\Jama.jar" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  131  java -cp ".:FDEA\lib\Jama.jar" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  132  java -cp "classes:FDEA/lib/Jama.jar" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  133  java -cp "classes:FDEA/lib/Ja*jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  134  java -cp "classes:FDEA/lib/*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
+  135  javac -d "classes" -cp "FDEA/src:FDEA/lib/*" FDEA/src/jmetal/metaheuristics/fdea_quali/FDEA_main_qualificacao.java
