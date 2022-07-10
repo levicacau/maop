@@ -145,35 +145,35 @@ public class FDEA_main_qualificacao {
 		return new int[]{popsize, iterationNumber*3};
 	}
 
-	// public static int[] getPopIterSize(int objectiveNumber){
-	// 	int popsize=0;
-	// 	int iterationNumber=0;
-	// 	if(objectiveNumber==2){
-	// 		popsize=100;
-	// 		iterationNumber=300*popsize;
-	// 	}
-	// 	if(objectiveNumber==3){
-	// 		popsize=120;
-	// 		iterationNumber=500*popsize;
-	// 	}
-	// 	if(objectiveNumber==5){
-	// 		popsize=210; //*25
-	// 		iterationNumber=600*popsize;
-	// 	}
-	// 	if(objectiveNumber==8){
-	// 		popsize=240; //*20
-	// 		iterationNumber=800*popsize;
-	// 	}
-	// 	if(objectiveNumber==10){
-	// 		popsize=275; //*30
-	// 		iterationNumber=1000*popsize;
-	// 	}
-	// 	if(objectiveNumber==15){
-	// 		popsize=240;
-	// 		iterationNumber=1500*popsize;
-	// 	}
-	// 	return new int[]{popsize, iterationNumber};
-	// }
+	 public static int[] getPopIterSizeFdea(int objectiveNumber){
+	 	int popsize=0;
+	 	int iterationNumber=0;
+	 	if(objectiveNumber==2){
+	 		popsize=100;
+	 		iterationNumber=300*popsize;
+	 	}
+	 	if(objectiveNumber==3){
+	 		popsize=120;
+	 		iterationNumber=500*popsize;
+	 	}
+	 	if(objectiveNumber==5){
+	 		popsize=210; //*25
+	 		iterationNumber=600*popsize;
+	 	}
+	 	if(objectiveNumber==8){
+	 		popsize=240; //*20
+	 		iterationNumber=800*popsize;
+	 	}
+	 	if(objectiveNumber==10){
+	 		popsize=275; //*30
+	 		iterationNumber=1000*popsize;
+	 	}
+	 	if(objectiveNumber==15){
+	 		popsize=240;
+	 		iterationNumber=1500*popsize;
+	 	}
+	 	return new int[]{popsize, iterationNumber};
+	 }
 
 	public static class RunExperiment extends Thread {
 		String problema, variante;
@@ -208,7 +208,7 @@ public class FDEA_main_qualificacao {
 			String front = problema+"."+obj+"D.pf";
 			QualityIndicator indicators;// Object to get quality indicators
 			indicators = null;
-			int [] popiter = getPopIterSize(obj);
+			int [] popiter = getPopIterSizeFdea(obj);
 
 			String base = importProblems;
 			if(problema.startsWith("DTL")){
