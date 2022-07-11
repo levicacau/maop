@@ -7,7 +7,7 @@ basePath=results
 
 entradas=$(cat "$basePath/titles.txt" | tail -1)
 
-
+problems=${problems^^}
 
 for problem in $problems; do #first step, verify if all the files exist
 	for objective in $objectives; do
