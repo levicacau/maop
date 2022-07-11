@@ -23,4 +23,5 @@ java -cp "classes:FDEA/lib/*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualifi
   134  java -cp "classes:FDEA/lib/*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualificacao
   135  javac -d "classes" -cp "FDEA/src:FDEA/lib/*" FDEA/src/jmetal/metaheuristics/fdea_quali/FDEA_main_qualificacao.java
 
-srv/
+git stash && git pull && chmod 776 -R src/assessment/
+./src/assessment/other/joinAllExecutions.sh &
