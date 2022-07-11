@@ -3,7 +3,7 @@ problems="dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg
 #problems="wfg6 wfg7 wfg8 wfg9"
 objectives="2 3 5 8 10 15"
 
-basePath=../../../results
+basePath=results
 
 entradas=$(cat "$basePath/titles.txt" | tail -1)
 

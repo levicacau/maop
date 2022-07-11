@@ -89,9 +89,9 @@ public class FDEA_main_qualificacao {
 
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadPoolSize);
 
-		for (String problema : problems) {
-			for (String objective : objectives) {
-				obj = Integer.parseInt(objective);
+		for (String objective : objectives) {
+			obj = Integer.parseInt(objective);
+			for (String problema : problems) {
 				for (String variante : variantes) {
 					for (int run = 1; run <= runs; run++) {
 						executor.execute(new RunExperiment(problema, obj, variante, getVar(problema, obj), run));
