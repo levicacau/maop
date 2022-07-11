@@ -25,4 +25,5 @@ java -cp "classes:FDEA/lib/*" jmetal.metaheuristics.fdea_quali.FDEA_main_qualifi
 
 git stash && git pull && chmod 776 -R src/assessment/
 ./src/assessment/other/joinAllExecutions.sh &
-./src/assessment/metrics/juntar_tudo_tudo.sh &
+javac src/assessment/metrics/hv.java
+./src/assessment/metrics/juntar_tudo_tudo.sh

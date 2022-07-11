@@ -1,6 +1,7 @@
 #entradas="novo/novo"\("0,0"\)" smpso/smpso"\("2,2"\)" smpso/smpso"\("2,3"\)" smpso/smpso"\("2,4"\)" smpso/smpso"\("3,2"\)" smpso/smpso"\("3,3"\)" smpso/smpso"\("3,4"\)" smpso/smpso"\("4,2"\)" smpso/smpso"\("4,3"\)" smpso/smpso"\("4,4"\)""
 
 basePath=results
+pathHv=src/assessment/metrics/
 
 entradas=$(cat $basePath/titles.txt | tail -1)
 
@@ -17,8 +18,8 @@ for problem in $1; do
 		for nomeSaida in $entradas; do
 			comando=$comando"$basePath/$nomeSaida""$problem-$objectives"_"fronts.txt "
 		done
-#		java -Xmx1G -cp assessment/metrics/ hv $comando >> "results/all-$problem-hv.txt"
-		java -Xmx1G hv $comando >> "$basePath/all-$problem-hv.txt"
+		java -Xmx1G -cp $pathHv hv $comando >> "results/all-$problem-hv.txt"
+#		java -Xmx1G hv $comando >> "$basePath/all-$problem-hv.txt"
 
 		unset comando;
 		echo $EFS >> "$basePath/all-$problem-hv.txt"
