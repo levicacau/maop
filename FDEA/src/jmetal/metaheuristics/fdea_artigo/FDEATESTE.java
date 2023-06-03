@@ -1,19 +1,7 @@
-package jmetal.metaheuristics.fdea_quali;
-
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+package jmetal.metaheuristics.fdea_artigo;
 
 import Jama.Matrix;
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.metaheuristics.moea_c.Utils;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
 import jmetal.util.Configuration;
@@ -23,6 +11,15 @@ import jmetal.util.comparators.DominanceComparator;
 import jmetal.util.comparators.OverallConstraintViolationComparator;
 import jmetal.util.ranking.NondominatedRanking;
 import jmetal.util.ranking.Ranking;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Comparator;
 
 public class FDEATESTE extends Algorithm{
 	private int populationSize_;
@@ -50,11 +47,12 @@ public class FDEATESTE extends Algorithm{
 	double[][] w;
 	int t=0;
 
+	/* FOR CALCULATE GERATIONAL HV */
 	private double[][] hvArray;
 	Solution referencePoint_;
 	private static final Comparator dominance_ = new DominanceComparator();
 	private static final Comparator constraint_ = new OverallConstraintViolationComparator();
-
+	/* FOR CALCULATE GERATIONAL HV */
 
 	public FDEATESTE(Problem problem) {
 		super(problem);
@@ -236,7 +234,7 @@ public class FDEATESTE extends Algorithm{
 				subPopulation = new MostSimilarBasedSampling(st[1], problem_.getNumberOfObjectives())
 						.getIdealPointOrientedPopulation(populationSize_);
 				//Elites Selection to preserve convergence
-				getNextPopulation(subPopulation,generations_,maxEvaluations_, interv);
+				getNextPopulation(subPopulation, generations_, maxEvaluations_, interv);
 			}
 
 			/* FOR CALCULATE GERATIONAL HV */

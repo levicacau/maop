@@ -94,7 +94,7 @@ public class hv {
 			}
 		}
 		//le o front real e atualiza os maiores e menores valores (pra incluir 0 como origem na maioria)
-		ArrayList<double[]> frontReal=new ArrayList<double[]>(lerReal("src/assessment/metrics/pareto/"+problem.toUpperCase()+"_"+objectiveNumber));
+		ArrayList<double[]> frontReal=new ArrayList<double[]>(lerReal("pareto/"+problem.toUpperCase()+"_"+objectiveNumber));
 		//ArrayList<double[]> frontReal=new ArrayList<double[]>(lerReal("pareto/DTLZ"+problem+"_"+objectiveNumber));
 		for(int s=0;s<frontReal.size();s++){//solucoes dentro do front real
 			double[] solTemp=frontReal.get(s);

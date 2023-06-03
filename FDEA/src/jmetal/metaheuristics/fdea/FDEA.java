@@ -16,6 +16,7 @@ import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.moea_c.Utils;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
+import jmetal.qualityIndicator.hypeHypervolume.HypEHypervolume;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -50,7 +51,8 @@ public class FDEA extends Algorithm{
 	double[] pValue;
 	double[][] w;
 	int t=0;
-
+	FastHypervolume fhv;
+	HypEHypervolume hypehv;
 	private static final Comparator dominance_ = new DominanceComparator();
 	private static final Comparator constraint_ = new OverallConstraintViolationComparator();
 	private int run_;
@@ -118,27 +120,15 @@ public class FDEA extends Algorithm{
 		T_ = ((Integer) this.getInputParameter("T")).intValue();
 		neighborhood_ = new int[populationSize_][T_];
 
-		int maxGenerations = maxEvaluations_/populationSize_ -1;
+		int maxGenerations = maxEvaluations_/populationSize_;
 		hvArray = new double[maxGenerations][2];
 
-//		if(problem_.getName().equals("DTLZ1")){
-//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
-//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
-//				referencePoint_.setObjective(i, 1);
-//			}
-//		}if(
-//				problem_.getName().equals("DTLZ2") ||
-//						problem_.getName().equals("DTLZ3") ||
-//						problem_.getName().equals("DTLZ4") ||
-//						problem_.getName().equals("DTLZ5") ||
-//						problem_.getName().equals("DTLZ6")
-//		){
-//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
-//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
-//				referencePoint_.setObjective(i, 2);
-//			}
-//		}
-//		FastHypervolume fhv = new FastHypervolume();
+		referencePoint_ = new Solution(problem_.getNumberOfObjectives());
+		for(int i=0; i < problem_.getNumberOfObjectives(); i++){
+			referencePoint_.setObjective(i, 2);
+		}
+		fhv = new FastHypervolume();
+		hypehv = new HypEHypervolume();
 
 		int interv;
 		if(problem_.getNumberOfObjectives() == 2){
@@ -160,7 +150,8 @@ public class FDEA extends Algorithm{
 		w = new double[maxEvaluations_/interv][problem_.getNumberOfObjectives()];
 		
 		initPopulation();// initialize the population;
-		
+		calculateFastHypervolume();
+		generations_++;
 		initIdealPoint();  // initialize the ideal point
 		
 		initNadirPoint();    // initialize the nadir point
@@ -176,7 +167,7 @@ public class FDEA extends Algorithm{
 			}
 			union_ = ((SolutionSet) population_).union(offspringPopulation_);
 			population_.clear();
-			SolutionSet[] st = getStSolutionSet(union_,populationSize_);
+			SolutionSet[] st = getStSolutionSet(union_, populationSize_);
 			double p = 1.0;
 			SolutionSet[] subPopulation = null;
 			//Autodecomposition
@@ -218,23 +209,14 @@ public class FDEA extends Algorithm{
 				    getNextPopulation(subPopulation, evaluations_, maxEvaluations_, interv);
 				}
 //			SolutionSet popHiper = nondominatedReferencePoint(population_);
-//			try {
-//				if(popHiper.size() >= problem_.getNumberOfObjectives()){
-//
-//					hvArray[generations_][0] = evaluations_;
-//					double hv = fhv.computeHypervolume(popHiper, referencePoint_);
-//					hvArray[generations_][1] = hv;
-//				}
-//			}catch (Exception e){
-//				System.out.println("Erro  "+generations_);
-//			}
-//			hvArray[generations_] = fhv.computeHypervolume(population_, referencePoint_);
+			calculateFastHypervolume();
 			generations_++;
 		}//while
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Pvalue.txt",pValue);
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
 
-//		printHvToFile("results/FDEA/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
+
+		printHvToFile("results/artigo/FDEA/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
 
 		Ranking nodominatedRanking = new NondominatedRanking(population_);
 		return nodominatedRanking.getSubfront(0);
@@ -243,16 +225,31 @@ public class FDEA extends Algorithm{
 
 	public SolutionSet nondominatedReferencePoint(SolutionSet solutionSet) {
 		SolutionSet retorno = new SolutionSet();
+		// dominateMe[i] contains the number of solutions dominating i
+		int[] dominateMe = new int[solutionSet.size()];
 
+		// iDominate[k] contains the list of solutions dominated by k
+		List<Integer>[] iDominate = new List[solutionSet.size()];
+
+		// front[i] contains the list of individuals belonging to the front i
+		List<Integer>[] front = new List[solutionSet.size() + 1];
 
 		// flagDominate is an auxiliar encodings.variable
 		int flagDominate;
 
+		// Initialize the fronts
+		for (int i = 0; i < front.length; i++)
+			front[i] = new LinkedList<Integer>();
 
 
 		// -> Fast non dominated sorting algorithm
 		// Contribution of Guillaume Jacquenot
-
+		for (int p = 0; p < solutionSet.size(); p++) {
+			// Initialize the list of individuals that i dominate and the number
+			// of individuals that dominate me
+			iDominate[p] = new LinkedList<Integer>();
+			dominateMe[p] = 0;
+		}
 		for (int p = 0; p < (solutionSet.size() - 1); p++) {
 			// For all q individuals , calculate if p dominates q or vice versa
 
@@ -263,13 +260,10 @@ public class FDEA extends Algorithm{
 						referencePoint_);
 			}
 			if (flagDominate == -1) {
-				Solution a = solutionSet.get(p);
 				retorno.add(solutionSet.get(p));
 //					iDominate[p].add(q);
 //					dominateMe[q]++;
 			} else if (flagDominate == 1) {
-				Solution a = solutionSet.get(p);
-				retorno.add(solutionSet.get(p));
 //					iDominate[q].add(p);
 //					dominateMe[p]++;
 			}
@@ -447,6 +441,24 @@ public class FDEA extends Algorithm{
 			problem_.evaluateConstraints(offSpring[0]);
 			offspringPopulation_.add(offSpring[0]);
 		} // for
+	}
+
+	public void calculateFastHypervolume(){
+		SolutionSet nondiminatedSolutionSet_ = nondominatedReferencePoint(population_);
+
+		try {
+			if(nondiminatedSolutionSet_.size() >= problem_.getNumberOfObjectives()){
+
+				hvArray[generations_][0] = evaluations_;
+				double hv = fhv.computeHypervolume(nondiminatedSolutionSet_, referencePoint_);
+				hvArray[generations_][1] = hv;
+			}else{
+				hvArray[generations_][0] = evaluations_;
+				hvArray[generations_][1] = 0;
+			}
+		}catch (Exception e){
+			System.out.println("Erro  "+generations_);
+		}
 	}
 
 	public void printHvToFile(String path) {

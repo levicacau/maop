@@ -1,17 +1,7 @@
 package jmetal.metaheuristics.fdea;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.*;
-
 import Jama.Matrix;
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.metaheuristics.moea_c.Utils;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
@@ -24,7 +14,15 @@ import jmetal.util.comparators.OverallConstraintViolationComparator;
 import jmetal.util.ranking.NondominatedRanking;
 import jmetal.util.ranking.Ranking;
 
-public class FDEATESTE extends Algorithm{
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
+public class FDEATESTE2 extends Algorithm{
 	private int populationSize_;
 	private int populationSizeGeneral_;
 	private int run_;
@@ -51,26 +49,17 @@ public class FDEATESTE extends Algorithm{
 	Operator crossover_;
 	Operator mutation_;
 	Operator selection_;
-	
+
 	private double[] zideal_; //ideal point
 	private double[] znadir_;//Nadir point
 	double[][] extremePoints_; // extreme points
-	
+
 	int T_;
 	int[][] neighborhood_;
-	
+
 	double[] pValue;
 	double[][] w;
 	int t=0;
-
-	public static final Map<Integer, Integer> mapInterv = new HashMap<Integer, Integer>() {{
-		put(2, 12);
-		put(3, 20);
-		put(5, 24);
-		put(8, 32);
-		put(10, 40);
-		put(15, 60);
-	}};
 
 	/**
 	 * stores a <code>Comparator</code> for dominance checking
@@ -82,8 +71,8 @@ public class FDEATESTE extends Algorithm{
 	 * Comparator checking
 	 */
 	private static final Comparator constraint_ = new OverallConstraintViolationComparator();
-	
-	public FDEATESTE(Problem problem) {
+
+	public FDEATESTE2(Problem problem) {
 		super(problem);
 	} // CAEA_Min_Ideal
     
@@ -158,7 +147,7 @@ public class FDEATESTE extends Algorithm{
 
 		int maxGen2 = 10;
 		int evaluationsGen2 = maxGen2 * populationSizeGeneral_;
-		targetEvaluations_ = (maxEvaluations_ - evaluationsGen2);
+		targetEvaluations_ = (maxEvaluations_ - evaluationsGen2 - populationSize_);
 
 //		int maxGenerations = maxGen2 + (maxEvaluations_ - (evaluationsGen2 + populationSize_))/populationSize_;
 		int maxGenerations = maxEvaluations_/populationSizeGeneral_;
@@ -172,8 +161,22 @@ public class FDEATESTE extends Algorithm{
 		T_ = ((Integer) this.getInputParameter("T")).intValue();
 		neighborhood_ = new int[populationSize_][T_];
 		
-		int interv = mapInterv.get(problem_.getNumberOfObjectives());
-
+		int interv;
+		if(problem_.getNumberOfObjectives() == 2){
+			interv = 12;
+		}else if(problem_.getNumberOfObjectives() == 3){
+			interv = 20;
+		}else if(problem_.getNumberOfObjectives() == 5){
+			interv = 24;
+		}else if(problem_.getNumberOfObjectives() == 8){
+			interv = 32;
+		}else if(problem_.getNumberOfObjectives() == 10){
+			interv = 40;
+		}else if(problem_.getNumberOfObjectives() == 15){
+			interv = 60;
+		}else{
+			interv = 30;
+		}
 		pValue = new double[maxEvaluations_/interv];
 		w = new double[maxEvaluations_/interv][problem_.getNumberOfObjectives()];
 		
@@ -188,9 +191,9 @@ public class FDEATESTE extends Algorithm{
 		while (evaluations_ < maxEvaluations_) {
 //			System.out.println("Population size: "+population_.size());
 
-			if(populationSize_ != populationSizeGeneral_ && evaluations_ >= targetEvaluations_ || expandNow_){
+			if(evaluations_ == targetEvaluations_ || expandNow_){
 				expand_population(evaluations_, maxEvaluations_);
-//				calculateFastHypervolume();
+				calculateFastHypervolume();
 			}
 
 
@@ -471,15 +474,10 @@ public class FDEATESTE extends Algorithm{
 //		reproduction(evaluations_, maxEvaluations_);
 //		population_ = ((SolutionSet) population_).union(offspringPopulation_);
 
-//		generateOffspring(populationSizeGeneral_ - populationSize_);
-//		population_ = ((SolutionSet) population_).union(offspringPopulation_);
+		generateOffspring(populationSizeGeneral_ - populationSize_);
+		population_ = ((SolutionSet) population_).union(offspringPopulation_);
 		populationSize_ = populationSizeGeneral_;
-		// preserva a população atual e cria uma nova com o tamanho da população geral
-		SolutionSet populationAux = new SolutionSet(populationSize_);
-		for(int i=0;i<population_.size();i++){
-			populationAux.add(population_.get(i));
-		}
-		population_ = populationAux;
+
 	}
 
 	public void getNeighborhood_Population(){

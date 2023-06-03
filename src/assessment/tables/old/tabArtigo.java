@@ -17,6 +17,7 @@ public class tabArtigo{
 public static void println(String x){System.out.println(x);}
 public static void println(){System.out.println();}
 static String caminho="results/";
+//static String caminho="C:\\Users\\Levi Cacau\\Downloads\\results-novoproc\\";
 static String table[][];
 static double medias[][];
 static boolean iguais[][];

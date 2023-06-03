@@ -6,5 +6,6 @@
 	#./assessment/metrics/juntar_tudo_gd.sh $problem &
   #./juntar_tudo_igd.sh $problem &
 	#./assessment/metrics/juntar_tudo_r2.sh $problem &
-	$basePath/juntar_tudo_hv.sh $problem &
+	./juntar_tudo_hv.sh $problem &
+#	$basePath/juntar_tudo_hv.sh $problem
 done

@@ -1,21 +1,8 @@
-package jmetal.metaheuristics.fdea;
-
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.*;
+package jmetal.metaheuristics.fdea_artigo;
 
 import Jama.Matrix;
-import jmetal.core.Algorithm;
-import jmetal.core.Operator;
-import jmetal.core.Problem;
-import jmetal.core.Solution;
-import jmetal.core.SolutionSet;
+import jmetal.core.*;
 import jmetal.metaheuristics.moea_c.Utils;
-import jmetal.qualityIndicator.Hypervolume;
-import jmetal.qualityIndicator.fastHypervolume.FastHypervolume;
-import jmetal.qualityIndicator.hypeHypervolume.HypEHypervolume;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
@@ -24,29 +11,22 @@ import jmetal.util.comparators.OverallConstraintViolationComparator;
 import jmetal.util.ranking.NondominatedRanking;
 import jmetal.util.ranking.Ranking;
 
-public class FDEATESTE extends Algorithm{
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Comparator;
+
+public class FDEA extends Algorithm{
 	private int populationSize_;
-	private int populationSizeGeneral_;
-	private int run_;
-
-	private String realFront_;
-	private double[][] hvArray;
-	private int hvArrayIndex = 0;
-	FastHypervolume fhv;
-	HypEHypervolume hypehv;
-	double[][] trueFront_;
-	String pathfront_ = "C:\\projetos\\mestrado\\Fuzzy-Decomposition-based-Evolutionary-Algorithm-main\\FDEA\\src\\resources\\referenceFronts\\";
-
+	
 	private SolutionSet population_;
 	SolutionSet offspringPopulation_;
 	SolutionSet union_;
-	Solution referencePoint_;
-	int dynamicExpand_ = 0;
-	boolean expandNow_ = false;
-	boolean expanded_ = false;
-
+	
 	int generations_;
 	int evaluations_ = 0;
+	Solution referencePoint_;
 
 	Operator crossover_;
 	Operator mutation_;
@@ -55,7 +35,7 @@ public class FDEATESTE extends Algorithm{
 	private double[] zideal_; //ideal point
 	private double[] znadir_;//Nadir point
 	double[][] extremePoints_; // extreme points
-	
+
 	int T_;
 	int[][] neighborhood_;
 	
@@ -63,27 +43,11 @@ public class FDEATESTE extends Algorithm{
 	double[][] w;
 	int t=0;
 
-	public static final Map<Integer, Integer> mapInterv = new HashMap<Integer, Integer>() {{
-		put(2, 12);
-		put(3, 20);
-		put(5, 24);
-		put(8, 32);
-		put(10, 40);
-		put(15, 60);
-	}};
-
-	/**
-	 * stores a <code>Comparator</code> for dominance checking
-	 */
 	private static final Comparator dominance_ = new DominanceComparator();
-
-	/**
-	 * stores a <code>Comparator</code> for Overal Constraint Violation
-	 * Comparator checking
-	 */
 	private static final Comparator constraint_ = new OverallConstraintViolationComparator();
-	
-	public FDEATESTE(Problem problem) {
+	private int run_;
+
+	public FDEA(Problem problem) {
 		super(problem);
 	} // CAEA_Min_Ideal
     
@@ -130,55 +94,63 @@ public class FDEATESTE extends Algorithm{
 	
 	@Override
 	public SolutionSet execute() throws JMException, ClassNotFoundException {
-		int maxEvaluations_, targetEvaluations_;
+		int maxEvaluations_;
+
 		generations_ = 0;
 		evaluations_ = 0;
 
-		maxEvaluations_ = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-		dynamicExpand_ = ((Integer) this.getInputParameter("dynamicExpand")).intValue();
-		run_ = ((Integer) this.getInputParameter("run")).intValue();
-		realFront_ = (String) this.getInputParameter("front");
-
-		fhv = new FastHypervolume();
-		hypehv = new HypEHypervolume();
-//		trueFront_ = qualityIndicator.utils_.readFront(pathfront_+ realFront_);
-
-//		maxEvaluations = ((Integer) this.getInputParameter("maxEvaluations")).intValue();
-//		if(maxEvaluations > 0)
-//			targetEvaluation = maxEvaluations/2;
-//		targetEvaluations_ = maxGenerations_/2;
-
-		populationSizeGeneral_ = ((Integer) this.getInputParameter("populationSize")).intValue();
-		populationSize_ = populationSizeGeneral_/2;
-
-			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
-			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
-				referencePoint_.setObjective(i, 2);
-			}
-
-		int maxGen2 = 10;
-		int evaluationsGen2 = maxGen2 * populationSizeGeneral_;
-		targetEvaluations_ = (maxEvaluations_ - evaluationsGen2);
-
-//		int maxGenerations = maxGen2 + (maxEvaluations_ - (evaluationsGen2 + populationSize_))/populationSize_;
-		int maxGenerations = maxEvaluations_/populationSizeGeneral_;
-		hvArray = new double[maxGenerations][2];
-
+		maxEvaluations_ = (Integer) this.getInputParameter("maxEvaluations");
+		populationSize_ = (Integer) this.getInputParameter("populationSize");
 		mutation_ = operators_.get("mutation");
 		crossover_ = operators_.get("crossover");
 		selection_ = operators_.get("selection");
-
-
-		T_ = ((Integer) this.getInputParameter("T")).intValue();
-		neighborhood_ = new int[populationSize_][T_];
+		run_ = (Integer) this.getInputParameter("run");
 		
-		int interv = mapInterv.get(problem_.getNumberOfObjectives());
+		T_ = (Integer) this.getInputParameter("T");
+		neighborhood_ = new int[populationSize_][T_];
 
+		int maxGenerations = maxEvaluations_/populationSize_ -1;
+
+//		if(problem_.getName().equals("DTLZ1")){
+//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
+//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
+//				referencePoint_.setObjective(i, 1);
+//			}
+//		}if(
+//				problem_.getName().equals("DTLZ2") ||
+//						problem_.getName().equals("DTLZ3") ||
+//						problem_.getName().equals("DTLZ4") ||
+//						problem_.getName().equals("DTLZ5") ||
+//						problem_.getName().equals("DTLZ6")
+//		){
+//			referencePoint_ = new Solution(problem_.getNumberOfObjectives());
+//			for(int i=0; i < problem_.getNumberOfObjectives(); i++){
+//				referencePoint_.setObjective(i, 2);
+//			}
+//		}
+//		FastHypervolume fhv = new FastHypervolume();
+
+		int interv;
+		if(problem_.getNumberOfObjectives() == 2){
+			interv = 12;
+		}else if(problem_.getNumberOfObjectives() == 3){
+			interv = 20;
+		}else if(problem_.getNumberOfObjectives() == 5){
+			interv = 24;
+		}else if(problem_.getNumberOfObjectives() == 8){
+			interv = 32;
+		}else if(problem_.getNumberOfObjectives() == 10){
+			interv = 40;
+		}else if(problem_.getNumberOfObjectives() == 15){
+			interv = 60;
+		}else{
+			interv = 30;
+		}
 		pValue = new double[maxEvaluations_/interv];
 		w = new double[maxEvaluations_/interv][problem_.getNumberOfObjectives()];
 		
 		initPopulation();// initialize the population;
-		calculateFastHypervolume();
+		
 		initIdealPoint();  // initialize the ideal point
 		
 		initNadirPoint();    // initialize the nadir point
@@ -186,24 +158,171 @@ public class FDEATESTE extends Algorithm{
 		initExtremePoints(); // initialize the extreme points
 		int nn = 0;
 		while (evaluations_ < maxEvaluations_) {
-//			System.out.println("Population size: "+population_.size());
-
-			if(populationSize_ != populationSizeGeneral_ && evaluations_ >= targetEvaluations_ || expandNow_){
-				expand_population(evaluations_, maxEvaluations_);
-//				calculateFastHypervolume();
+			
+			if(evaluations_ < maxEvaluations_){
+				reproduction(evaluations_, maxEvaluations_);
+			}else{
+				reproduction_Neighbor();
 			}
-
-
-
-				if (evaluations_ < maxEvaluations_) {
-					reproduction(evaluations_, maxEvaluations_);
-				} else {
-					reproduction_Neighbor();
-				}
-
 			union_ = ((SolutionSet) population_).union(offspringPopulation_);
 			population_.clear();
-			SolutionSet[] st = getStSolutionSet(union_, populationSize_);
+			SolutionSet[] st = getStSolutionSet(union_,populationSize_);
+			double p = 1.0;
+			SolutionSet[] subPopulation = null;
+			//Autodecomposition
+				//estimateIdealPoint(st[0]);
+			    updateIdealPoint(st[0]);
+			    if(st[0].size() < problem_.getNumberOfObjectives()){
+			    	updateNadirPoint(st[1]);
+			    }else{
+			    	updateNadirPoint(st[0]);
+			    }
+				
+				//estimateNadirPoint(st[1]);
+				
+				normalizationObjective(st[1]);
+				
+				/*if((generations_)/100 == 0){
+					p = estimation_Curvature(st[0]);
+				}*/
+				if(evaluations_ > 0.0*maxEvaluations_){
+					p = estimation_Curvature(st[0]);
+				}
+				
+
+				/*if(generations_%interv == 0){
+				  pValue[nn] = p; 
+				  System.out.println("The current curvature is p = "+p);
+				  nn++;
+			    }*/
+
+
+
+				if(st[1].size() == populationSize_){
+					population_ = st[1];
+				}else{
+					mapping(st[1],p);
+				    subPopulation = new MostSimilarBasedSampling(st[1], problem_.getNumberOfObjectives())
+							.getIdealPointOrientedPopulation(populationSize_);
+				    //Elites Selection to preserve convergence
+				    getNextPopulation(subPopulation, evaluations_, maxEvaluations_, interv);
+				}
+//			SolutionSet popHiper = nondominatedReferencePoint(population_);
+//			try {
+//				if(popHiper.size() >= problem_.getNumberOfObjectives()){
+//
+//					hvArray[generations_][0] = evaluations_;
+//					double hv = fhv.computeHypervolume(popHiper, referencePoint_);
+//					hvArray[generations_][1] = hv;
+//				}
+//			}catch (Exception e){
+//				System.out.println("Erro  "+generations_);
+//			}
+//			hvArray[generations_] = fhv.computeHypervolume(population_, referencePoint_);
+			generations_++;
+		}//while
+		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Pvalue.txt",pValue);
+		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
+
+//		printHvToFile("results/FDEA/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
+
+		Ranking nodominatedRanking = new NondominatedRanking(population_);
+		return nodominatedRanking.getSubfront(0);
+		//return population_;
+	}//execute
+
+	public SolutionSet nondominatedReferencePoint(SolutionSet solutionSet) {
+		SolutionSet retorno = new SolutionSet();
+
+
+		// flagDominate is an auxiliar encodings.variable
+		int flagDominate;
+
+
+
+		// -> Fast non dominated sorting algorithm
+		// Contribution of Guillaume Jacquenot
+
+		for (int p = 0; p < (solutionSet.size() - 1); p++) {
+			// For all q individuals , calculate if p dominates q or vice versa
+
+			flagDominate = constraint_.compare(solutionSet.get(p),
+					referencePoint_);
+			if (flagDominate == 0) {
+				flagDominate = dominance_.compare(solutionSet.get(p),
+						referencePoint_);
+			}
+			if (flagDominate == -1) {
+				Solution a = solutionSet.get(p);
+				retorno.add(solutionSet.get(p));
+//					iDominate[p].add(q);
+//					dominateMe[q]++;
+			} else if (flagDominate == 1) {
+				Solution a = solutionSet.get(p);
+				retorno.add(solutionSet.get(p));
+//					iDominate[q].add(p);
+//					dominateMe[p]++;
+			}
+
+			// If nobody dominates p, p belongs to the first front
+		}
+		return retorno;
+
+	}
+
+	//	@Override
+	public SolutionSet execute2() throws JMException, ClassNotFoundException {
+		int maxGenerations_;
+
+		generations_ = 0;
+
+		maxGenerations_ = ((Integer) this.getInputParameter("maxGenerations"))
+				.intValue();
+		populationSize_ = ((Integer) this.getInputParameter("populationSize")).intValue();
+		mutation_ = operators_.get("mutation");
+		crossover_ = operators_.get("crossover");
+		selection_ = operators_.get("selection");
+
+		T_ = ((Integer) this.getInputParameter("T")).intValue();
+		neighborhood_ = new int[populationSize_][T_];
+
+		int interv;
+		if(problem_.getNumberOfObjectives() == 2){
+			interv = 12;
+		}else if(problem_.getNumberOfObjectives() == 3){
+			interv = 20;
+		}else if(problem_.getNumberOfObjectives() == 5){
+			interv = 24;
+		}else if(problem_.getNumberOfObjectives() == 8){
+			interv = 32;
+		}else if(problem_.getNumberOfObjectives() == 10){
+			interv = 40;
+		}else if(problem_.getNumberOfObjectives() == 15){
+			interv = 60;
+		}else{
+			interv = 30;
+		}
+		pValue = new double[maxGenerations_/interv];
+		w = new double[maxGenerations_/interv][problem_.getNumberOfObjectives()];
+
+		initPopulation();// initialize the population;
+
+		initIdealPoint();  // initialize the ideal point
+
+		initNadirPoint();    // initialize the nadir point
+
+		initExtremePoints(); // initialize the extreme points
+		int nn = 0;
+		while (generations_ < maxGenerations_) {
+
+			if(generations_ < maxGenerations_){
+				reproduction(generations_, maxGenerations_);
+			}else{
+				reproduction_Neighbor();
+			}
+			union_ = ((SolutionSet) population_).union(offspringPopulation_);
+			population_.clear();
+			SolutionSet[] st = getStSolutionSet(union_,populationSize_);
 			double p = 1.0;
 			SolutionSet[] subPopulation = null;
 			//Autodecomposition
@@ -216,19 +335,19 @@ public class FDEATESTE extends Algorithm{
 			    }
 
 				//estimateNadirPoint(st[1]);
-				
+
 				normalizationObjective(st[1]);
-				
+
 				/*if((generations_)/100 == 0){
 					p = estimation_Curvature(st[0]);
 				}*/
-				if(evaluations_ > 0.0*maxEvaluations_){
+				if(generations_ > 0.0*maxGenerations_){
 					p = estimation_Curvature(st[0]);
 				}
 
 
 				/*if(generations_%interv == 0){
-				  pValue[nn] = p; 
+				  pValue[nn] = p;
 				  System.out.println("The current curvature is p = "+p);
 				  nn++;
 			    }*/
@@ -239,146 +358,18 @@ public class FDEATESTE extends Algorithm{
 				    subPopulation = new MostSimilarBasedSampling(st[1], problem_.getNumberOfObjectives())
 							.getIdealPointOrientedPopulation(populationSize_);
 				    //Elites Selection to preserve convergence
-				    getNextPopulation(subPopulation,generations_,maxEvaluations_, interv);
+				    getNextPopulation(subPopulation,generations_,maxGenerations_, interv);
 				}
-//			SolutionSet popHiper = nondominatedReferencePoint(population_);
-			calculateFastHypervolume();
-//			System.out.println("Generation "+generations_+" HV = "+hv);
+
 			generations_++;
 		}//while
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Pvalue.txt",pValue);
 		//printGD("FDEA_"+problem_.getNumberOfObjectives()+"Obj_"+problem_.getName()+"_Wvalue.txt",w);
-
-		printHvToFile("results/artigo/FDEATESTE/HV/"+problem_.getName()+"-"+problem_.getNumberOfObjectives()+"-"+run_+".txt");
-
-
+		System.out.println("Evaluations "+ evaluations_);
 		Ranking nodominatedRanking = new NondominatedRanking(population_);
 		return nodominatedRanking.getSubfront(0);
 		//return population_;
 	}//execute
-
-	public boolean compareHV(double currentHV){
-		/* return true if HV is better than others, false if less*/
-		if(currentHV == 0) return true;
-		if(generations_ < dynamicExpand_) return true;
-		for(int i=generations_-1; i>generations_-dynamicExpand_; i--){
-			if(currentHV > hvArray[i][1]) return true;
-		}
-		return false;
-	}
-
-	public double calculeteHV(){
-
-		// Create a new instance of the metric
-		Hypervolume qualityIndicator = new Hypervolume();
-		// Read the front from the files
-		double[][] solutionFront = new double[population_.size()][problem_.getNumberOfObjectives()];
-
-		for(int i=0; i<population_.size(); i++){
-			for(int o=0; o<problem_.getNumberOfObjectives(); o++) {
-				solutionFront[i][o] = population_.get(i).getObjective(o);
-			}
-		}
-
-//		double[][] trueFront = qualityIndicator.utils_.readFront(pathfront_+ realFront_);
-
-		// Obtain delta value
-		double value = qualityIndicator.hypervolume(solutionFront, trueFront_,
-				problem_.getNumberOfObjectives());
-		return value;
-	}
-
-	public void calculateFastHypervolume(){
-		if (evaluations_ % populationSizeGeneral_ != 0) {
-			return;
-		}
-
-		SolutionSet nondiminatedSolutionSet_ = nondominatedReferencePoint(population_);
-
-		try {
-			if(nondiminatedSolutionSet_.size() >= problem_.getNumberOfObjectives()){
-
-				hvArray[hvArrayIndex][0] = evaluations_;
-				double hv = fhv.computeHypervolume(nondiminatedSolutionSet_, referencePoint_);
-				hvArray[hvArrayIndex][1] = hv;
-			}else{
-				hvArray[hvArrayIndex][0] = evaluations_;
-				hvArray[hvArrayIndex][1] = 0;
-			}
-		}catch (Exception e){
-			System.out.println("Erro  "+generations_);
-		}finally {
-			hvArrayIndex++;
-		}
-	}
-
-	public void printHvToFile(String path) {
-		try {
-			FileOutputStream fos = new FileOutputStream(path);
-			OutputStreamWriter osw = new OutputStreamWriter(fos);
-			BufferedWriter bw = new BufferedWriter(osw);
-			for (double[] hv : hvArray){
-				bw.write(hv[0]+", "+hv[1]);
-				bw.newLine();
-			}
-			bw.close();
-		} catch (IOException e) {
-			Configuration.logger_.severe("Error acceding to the file");
-			e.printStackTrace();
-		}
-	}
-
-	public SolutionSet nondominatedReferencePoint(SolutionSet solutionSet) {
-		SolutionSet retorno = new SolutionSet();
-		// dominateMe[i] contains the number of solutions dominating i
-		int[] dominateMe = new int[solutionSet.size()];
-
-		// iDominate[k] contains the list of solutions dominated by k
-		List<Integer>[] iDominate = new List[solutionSet.size()];
-
-		// front[i] contains the list of individuals belonging to the front i
-		List<Integer>[] front = new List[solutionSet.size() + 1];
-
-		// flagDominate is an auxiliar encodings.variable
-		int flagDominate;
-
-		// Initialize the fronts
-		for (int i = 0; i < front.length; i++)
-			front[i] = new LinkedList<Integer>();
-
-
-		// -> Fast non dominated sorting algorithm
-		// Contribution of Guillaume Jacquenot
-		for (int p = 0; p < solutionSet.size(); p++) {
-			// Initialize the list of individuals that i dominate and the number
-			// of individuals that dominate me
-			iDominate[p] = new LinkedList<Integer>();
-			dominateMe[p] = 0;
-		}
-		for (int p = 0; p < (solutionSet.size() - 1); p++) {
-			// For all q individuals , calculate if p dominates q or vice versa
-
-				flagDominate = constraint_.compare(solutionSet.get(p),
-						referencePoint_);
-				if (flagDominate == 0) {
-					flagDominate = dominance_.compare(solutionSet.get(p),
-							referencePoint_);
-				}
-				if (flagDominate == -1) {
-					retorno.add(solutionSet.get(p));
-//					iDominate[p].add(q);
-//					dominateMe[q]++;
-				} else if (flagDominate == 1) {
-//					iDominate[q].add(p);
-//					dominateMe[p]++;
-				}
-
-			// If nobody dominates p, p belongs to the first front
-		}
-		return retorno;
-
-	}
-
 
 	public void initPopulation() throws JMException, ClassNotFoundException {
 		evaluations_ += populationSize_;
@@ -412,45 +403,28 @@ public class FDEATESTE extends Algorithm{
 			} // if
 		} // for
 	}
-
-	public void generateOffspring(int N) throws JMException{
-		evaluations_ += N;
-		offspringPopulation_ = new SolutionSet(N);
-		Solution[] parents = new Solution[2];
-		for (int i = 0; i < (N); i++) {
-			// obtain parents
-			parents = (Solution[]) selection_.execute(population_);
-
-			Solution[] offSpring = (Solution[]) crossover_
-					.execute(parents);
-			mutation_.execute(offSpring[0]);
-			problem_.evaluate(offSpring[0]);
-			problem_.evaluateConstraints(offSpring[0]);
-			offspringPopulation_.add(offSpring[0]);
-		} // for
-	}
-
-	public void reproduction_Neighbor() throws JMException{
+	
+	public void reproduction_Neighbor() throws JMException {
 		evaluations_ += populationSize_;
 		getNeighborhood_Population();
-		
+
 		offspringPopulation_ = new SolutionSet(populationSize_);
 		Solution[] parents = new Solution[2];
 		for (int i = 0; i < (populationSize_); i++) {
 			// obtain parents
-			int r1 = PseudoRandom.randInt(0, populationSize_-1);
+			int r1 = PseudoRandom.randInt(0, populationSize_ - 1);
 			parents[0] = population_.get(r1);
 			double rd = PseudoRandom.randDouble();
-			if(rd < 0.2){
-				int r2 = PseudoRandom.randInt(0, populationSize_-1);
-				while(r1 == r2){
-					r2 = PseudoRandom.randInt(0, populationSize_-1);
+			if (rd < 0.2) {
+				int r2 = PseudoRandom.randInt(0, populationSize_ - 1);
+				while (r1 == r2) {
+					r2 = PseudoRandom.randInt(0, populationSize_ - 1);
 				}
 				parents[1] = population_.get(r2);
-			}else{
-				int r2 = PseudoRandom.randInt(0, T_-1);
-				while(r1 == neighborhood_[r1][r2]){
-					r2 = PseudoRandom.randInt(0, T_-1);
+			} else {
+				int r2 = PseudoRandom.randInt(0, T_ - 1);
+				while (r1 == neighborhood_[r1][r2]) {
+					r2 = PseudoRandom.randInt(0, T_ - 1);
 				}
 				parents[1] = population_.get(neighborhood_[r1][r2]);
 			}
@@ -463,23 +437,6 @@ public class FDEATESTE extends Algorithm{
 			problem_.evaluateConstraints(offSpring[0]);
 			offspringPopulation_.add(offSpring[0]);
 		} // for
-	}
-
-	public void expand_population(int evaluations_, int maxEvaluations_) throws JMException{
-//		generateOffspring(populationSizeGeneral_ - populationSize_);
-//		populationSize_ = populationSizeGeneral_;
-//		reproduction(evaluations_, maxEvaluations_);
-//		population_ = ((SolutionSet) population_).union(offspringPopulation_);
-
-//		generateOffspring(populationSizeGeneral_ - populationSize_);
-//		population_ = ((SolutionSet) population_).union(offspringPopulation_);
-		populationSize_ = populationSizeGeneral_;
-		// preserva a população atual e cria uma nova com o tamanho da população geral
-		SolutionSet populationAux = new SolutionSet(populationSize_);
-		for(int i=0;i<population_.size();i++){
-			populationAux.add(population_.get(i));
-		}
-		population_ = populationAux;
 	}
 
 	public void getNeighborhood_Population(){

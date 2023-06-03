@@ -1,29 +1,24 @@
-package jmetal.metaheuristics.fdea;
+package jmetal.metaheuristics.fdea_artigo;
 
 import jmetal.core.*;
 import jmetal.metaheuristics.fastTea.FastTea;
 import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.SelectionFactory;
-import jmetal.problems.DTLZ.*;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-public class FDEA_main_experiment {
+public class FDEA_main_qualificacao {
 	public static Logger logger_; // Logger object
 	public static FileHandler fileHandler_; // FileHandler object
 	public static final String pathProblems = "C:\\projetos\\mestrado\\Fuzzy-Decomposition-based-Evolutionary-Algorithm-main\\FDEA\\src\\resources\\referenceFronts\\";
@@ -78,30 +73,25 @@ public class FDEA_main_experiment {
 //		String[] objectives = "2 3 5 8 10 15".split(" ");
 //		String[] variantes = "FDEATESTE FDEA".split(" ");
 
-//		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7".split(" ");
-//		String[] objectives = "2 3 5 8 10".split(" ");
-//		String[] variantes = "FDEA FDEATESTE FastTea".split(" ");
-
-//		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7".toUpperCase().split(" "); // wfg 1-9
-		// wfg 1-9
-//		String[] problems = "wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
-		String[] problems = "dtlz3".toUpperCase().split(" "); // wfg 1-9
+		String[] problems = "dtlz3".toUpperCase().split(" ");
 		String[] objectives = "3".split(" ");
 		String[] variantes = "FDEATESTE".split(" ");
-		// run DTLZ1 DTLZ2 DTLZ3 DTLZ4 DTLZ5 DTLZ6 2 FDEA FDEATESTE
-//		python somaHV.py "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6" "2" "FDEA FDEATESTE"
-		// run WFG1 WFG2 WFG3 WFG4 WFG5 WFG6 WFG7 WFG8 WFG9 2 FDEA FDEATESTE
-//		python somaHV.py "wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9" "2" "FDEA FDEATESTE"
+
+//		String[] problems = "dtlz1 dtlz2 dtlz3 dtlz4 dtlz5 dtlz6 dtlz7 wfg1 wfg2 wfg3 wfg4 wfg5 wfg6 wfg7 wfg8 wfg9".toUpperCase().split(" "); // wfg 1-9
+//		String[] objectives = "2 3 5 8 10 15".split(" ");
+//		String[] variantes = "FDEATESTE FDEA".split(" ");
+
 		int runs = 1;
-		int obj;
+
+		int obj = 2;
 		int variaveis = 24;
 		int threadPoolSize = 10;
 
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threadPoolSize);
 
-		for (String problema : problems) {
-			for (String objective : objectives) {
-				obj = Integer.parseInt(objective);
+		for (String objective : objectives) {
+			obj = Integer.parseInt(objective);
+			for (String problema : problems) {
 				for (String variante : variantes) {
 					for (int run = 1; run <= runs; run++) {
 						executor.execute(new RunExperiment(problema, obj, variante, getVar(problema, obj), run));
@@ -113,6 +103,7 @@ public class FDEA_main_experiment {
   }//main
 
 	private static int getVar(String problem, int obj) {
+
 		if(problem.startsWith("DTL")){
 			int p = Integer.parseInt(problem.substring(4,5));
 			return p != 7 ? 9 + obj : 19 + obj;
@@ -123,40 +114,66 @@ public class FDEA_main_experiment {
 		return 0;
 	}
 
+
 	public static int[] getPopIterSize(int objectiveNumber){
 		int popsize=0;
 		int iterationNumber=0;
 		if(objectiveNumber==2){
-			popsize=100;
-			iterationNumber=10000;
+			popsize=50;
+			iterationNumber=2000;
 		}
 		if(objectiveNumber==3){
-			popsize=200;
-
-//			iterationNumber=50*popsize;
-			iterationNumber=50000;
-//			iterationNumber=15000;
+			popsize=190;
+			iterationNumber=4750;
 		}
 		if(objectiveNumber==5){
 			popsize=714; //*25
 			iterationNumber=9996;
-//			iterationNumber=600*popsize;
 		}
 		if(objectiveNumber==8){
-			popsize=912;
+			popsize=912; //*20
 			iterationNumber=18240;
-//			iterationNumber=800*popsize;
 		}
 		if(objectiveNumber==10){
-			popsize=275; //*30
-			iterationNumber=1000*popsize;
+			popsize=934; //*30
+			iterationNumber=280200;
 		}
 		if(objectiveNumber==15){
-			popsize=240;
-			iterationNumber=1500*popsize;
+			popsize=140;
+			iterationNumber=3000;
 		}
-		return new int[]{popsize, iterationNumber};
+		return new int[]{popsize, iterationNumber*3};
 	}
+
+	 public static int[] getPopIterSizeFdea(int objectiveNumber){
+	 	int popsize=0;
+	 	int iterationNumber=0;
+	 	if(objectiveNumber==2){
+	 		popsize=100;
+	 		iterationNumber=300*popsize;
+	 	}
+	 	if(objectiveNumber==3){
+	 		popsize=120;
+	 		iterationNumber=500*popsize;
+	 	}
+	 	if(objectiveNumber==5){
+	 		popsize=210; //*25
+	 		iterationNumber=600*popsize;
+	 	}
+	 	if(objectiveNumber==8){
+	 		popsize=240; //*20
+	 		iterationNumber=800*popsize;
+	 	}
+	 	if(objectiveNumber==10){
+	 		popsize=275; //*30
+	 		iterationNumber=1000*popsize;
+	 	}
+	 	if(objectiveNumber==15){
+	 		popsize=240;
+	 		iterationNumber=1500*popsize;
+	 	}
+	 	return new int[]{popsize, iterationNumber};
+	 }
 
 	public static class RunExperiment extends Thread {
 		String problema, variante;
@@ -176,6 +193,8 @@ public class FDEA_main_experiment {
 
 			long Execution_time=0;
 
+			checkPathResults("results/"+variante +"/split/");
+
 			Problem problem = null; // The problem to solve
 			Algorithm algorithm = null; // The algorithm to use
 			Operator crossover = null; // Crossover operator\
@@ -186,7 +205,7 @@ public class FDEA_main_experiment {
 			HashMap parameters; // Operator parameters
 
 			Solution referencePoint;
-			String front = "";
+			String front = problema+"."+obj+"D.pf";
 			QualityIndicator indicators;// Object to get quality indicators
 			indicators = null;
 			int [] popiter = getPopIterSize(obj);
@@ -213,6 +232,7 @@ public class FDEA_main_experiment {
 				}
 			}
 
+
 			if(variante.equals("FDEATESTE")){
 				algorithm = new FDEATESTE(problem);
 			}
@@ -228,7 +248,6 @@ public class FDEA_main_experiment {
 //			}
 
 //			algorithm.setInputParameter("maxGenerations", 100);
-			algorithm.setInputParameter("variante", variante);
 			algorithm.setInputParameter("maxEvaluations", popiter[1]);
 			algorithm.setInputParameter("populationSize", popiter[0]);
 			algorithm.setInputParameter("T", 10);
@@ -236,7 +255,7 @@ public class FDEA_main_experiment {
 			algorithm.setInputParameter("div2", 0);
 			algorithm.setInputParameter("front", front);
 			algorithm.setInputParameter("run", run);
-			algorithm.setInputParameter("dynamicExpand", 0);
+			algorithm.setInputParameter("dynamicExpand", 10);
 
 			// Mutation and Crossover for Real codification
 			parameters = new HashMap();
@@ -287,9 +306,19 @@ public class FDEA_main_experiment {
 			Execution_time+=(System.currentTimeMillis() - initTime);
 
 			logger_.info("Total execution time: "+Execution_time);
+
 			population.printVariablesToFile("results/"+variante +"/split/"+problema+"-"+obj + "-" + variante + "_solutions." + run + ".txt");
 			population.printObjectivesToFile("results/"+variante +"/split/" + problema + "-" + obj + "-" + variante + "_fronts." + run + ".txt");
 
+		}
+
+		private void checkPathResults(String PATH) {
+			File directory = new File(PATH);
+			if (! directory.exists()){
+				directory.mkdirs();
+				// If you require it to make the entire directory path including parents,
+				// use directory.mkdirs(); here instead.
+			}
 		}
 	}
 }
